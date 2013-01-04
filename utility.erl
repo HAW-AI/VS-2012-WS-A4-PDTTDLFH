@@ -3,8 +3,8 @@
 
 % timestamp in millisec since 00:00 UTC, January 1, 1970
 current_timestamp() ->
-  {Megasec,Sec,Microsec} = erlang:now(),
-	(Megasec * 1000000) + Sec + (Microsec / 1000000) div 1000.
+  {Mega, Sec, Micro} = now(),
+  Mega * 1000000000 + Sec * 1000 + Micro div 1000.
 
 current_frame()->
 	{_,CurrentFrame,_}=erlang:now(),
