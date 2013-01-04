@@ -33,7 +33,7 @@ handle_cast({get_data, PID}, State) ->
   io:format("data transfered to sender: ~p~n",[State#state.current_data]),
   gen_fsm:send_event(PID,{input, State#state.current_data}),
   {noreply, State#state{current_data=[]}};
-  
+
 handle_cast(kill, State) ->
   io:format("datasource killed"),
   {stop, normal, State};
@@ -41,7 +41,7 @@ handle_cast(kill, State) ->
 handle_cast(Any, State) ->
   io:format("received unknown msg: ~p~n",[Any]),
   {noreply, State}.
-  
+
 %%% do everything required for a clean shutdown
 terminate(_Reason, State) ->
   exit(State#state.input_reader_pid, normal),
@@ -51,9 +51,9 @@ read_from_datasource(DatasourcePID) ->
   case io:get_chars("", 24) of
     %%% TODO log something
     eof ->
-		exit(normal);
+      exit(normal);
     {error, Reason} ->
-		exit(Reason);
+      exit(Reason);
     NextChunk ->
       gen_server:cast(DatasourcePID, {input, NextChunk}),
       read_from_datasource(DatasourcePID)

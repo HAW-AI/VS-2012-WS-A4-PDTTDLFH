@@ -2,8 +2,8 @@
 -compile(export_all).
 
 % timestamp in millisec since 00:00 UTC, January 1, 1970
-current_timestamp() -> 
-    {Megasec,Sec,Microsec} = erlang:now(),
+current_timestamp() ->
+  {Megasec,Sec,Microsec} = erlang:now(),
 	(Megasec * 1000000) + Sec + (Microsec / 1000000) div 1000.
 
 current_frame()->

@@ -26,18 +26,18 @@ init([CoordinatorPID, ReceivingSocket]) ->
 handle_cast({udp, _Socket, _IP, _InPortNo, Packet}, State) ->
   io:format("received packet"),
   Timestamp = utility:current_timestamp(),
-  Slot = utility:slot_of_timestamp(Timestamp),
+  Slot      = utility:slot_of_timestamp(Timestamp),
   gen_server:cast(State#state.coordinator_pid, {received, Slot, Timestamp, Packet}),
   {noreply, State};
 
 handle_cast(kill, State) ->
   io:format("receiver killed"),
-  {stop, normal, State}. % calls :terminate and then shuts down
-  
-handle_cast(Any, State) ->
-  io:format("received unknown msg: ~p~n",[Any]),
+  {stop, normal, State}; % calls :terminate and then shuts down
+
+handle_cast(UnknownMessage, State) ->
+  io:format("received unknown msg: ~p~n", [UnknownMessage]),
   {noreply, State}.
-  
+
 %%% do everything required for a clean shutdown
 terminate(_Reason, State) ->
   gen_udp:close(State#state.receiving_socket),
