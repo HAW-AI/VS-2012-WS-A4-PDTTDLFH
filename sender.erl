@@ -18,9 +18,9 @@
          code_change/4]).
 
 -record(state, {datasource_pid :: pid(), % PID of the datasource gen_server
-                sending_socket,          % 
+                sending_socket,          %
                 multicast_ip,            % IP used for broadcast
-                receiving_port,          % 
+                receiving_port,          %
                 coordinator_pid :: pid(),% PID of the coordinator gen_server
                 slot                     % slot of each frame used for sending
                }).
@@ -42,14 +42,18 @@ init([CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort]) ->
                             }}.
 
 waiting_for_slot({slot, Slot}, State) ->
+  io:format("waiting_for_slot: {slot, ~p}~n", [Slot]),
   {next_state, waiting_for_input, State#state{slot = Slot}};
-waiting_for_slot(_Event, State) ->
+waiting_for_slot(Event, State) ->
+  io:format("waiting_for_slot: unknown event: ~p~n", [Event]),
   {next_state, waiting_for_slot, State}.
 
 waiting_for_input({input, Data}, State) ->
+  io:format("waiting_for_input: {input, ~p}~n", [Data]),
   %%% do something
   {next_state, send_message, State};
-waiting_for_input(_Event, State) ->
+waiting_for_input(Event, State) ->
+  io:format("waiting_for_input: unknown event: ~p~n", [Event]),
   {next_state, waiting_for_input, State}.
 
 send_message(Foobar, State) ->
