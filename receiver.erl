@@ -34,9 +34,12 @@ handle_cast({udp, _Socket, _IP, _InPortNo, Packet}, State) ->
   {noreply, State};
 
 handle_cast(kill, State) ->
+  {stop, normal, State}. % calls :terminate and then shuts down
+
+%%% do everything required for a clean shutdown
+terminate(_Reason, State) ->
   gen_udp:close(State#state.receiving_socket),
-  exit(normal),
-  {noreply, State}.
+  ok.
 
 
 
@@ -48,9 +51,6 @@ handle_call(_Request, _From, State) ->
 
 handle_info(_Info, State) ->
   {noreply, State}.
-
-terminate(_Reason, _State) ->
-  ok.
 
 code_change(_OldVsn, State, _Extra) ->
   {ok, State}.

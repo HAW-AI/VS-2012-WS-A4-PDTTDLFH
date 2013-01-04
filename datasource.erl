@@ -26,7 +26,14 @@ init([]) ->
 
 handle_cast({input, Data}, State) ->
   %%% TODO handle input in here somehow
-  {noreply, State}.
+  {noreply, State};
+
+handle_cast(kill, State) ->
+  {stop, normal, State}.
+
+%%% do everything required for a clean shutdown
+terminate(_Reason, _State) ->
+  ok.
 
 
 
@@ -50,9 +57,6 @@ handle_call(_Request, _From, State) ->
 
 handle_info(_Info, State) ->
   {noreply, State}.
-
-terminate(_Reason, _State) ->
-  ok.
 
 code_change(_OldVsn, State, _Extra) ->
   {ok, State}.

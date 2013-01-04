@@ -82,12 +82,13 @@ handle_cast({received, _Slot, _Time, _Packet}, State) ->
   {noreply, State};
 
 handle_cast(kill, State) ->
+  {stop, normal, State}.
+
+%%% do everything required for a clean shutdown
+terminate(_Reason, State) ->
   gen_server:cast(State#state.receiver_pid, kill),
-  gen_server:cast(State#state.sender_pid, kill),
-  exit(normal),
-
-  {noreply, State}.
-
+  gen_fsm:send_event(State#state.sender_pid, kill),
+  ok.
 
 %%%%% Helpers
 get_random_slot() ->
@@ -101,9 +102,6 @@ get_random_slot() ->
 %%% OTP gen_server boilerplate - ignore this
 handle_info(_Info, State) ->
   {noreply, State}.
-
-terminate(_Reason, _State) ->
-  ok.
 
 code_change(_OldVsn, State, _Extra) ->
   {ok, State}.

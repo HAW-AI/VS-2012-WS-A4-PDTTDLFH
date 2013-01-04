@@ -34,11 +34,11 @@ start(CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort) ->
 init([CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort]) ->
   {ok, DataSourcePID} = datasource:start(),
   {ok, wait_for_slot, #state{datasource_pid  = DataSourcePID,
-                          sending_socket  = SendingSocket,
-                          multicast_ip    = MulticastIP,
-                          receiving_port  = ReceivingPort,
-                          coordinator_pid = CoordinatorPID
-                         }}.
+                             sending_socket  = SendingSocket,
+                             multicast_ip    = MulticastIP,
+                             receiving_port  = ReceivingPort,
+                             coordinator_pid = CoordinatorPID
+                            }}.
 
 waiting_for_slot({slot, Slot}, State) ->
   {next_state, waiting_for_input, State#state{slot = Slot}};
@@ -60,16 +60,20 @@ send_message(Foobar, State) ->
                Packet),
   {next_state, waiting_for_slot, State}.
 
+handle_event(kill, _StateName, State) ->
+  {stop, normal, State}.
 
-handle_event(_Event, StateName, State) ->
-  {next_state, StateName, State}.
+%%% do everything required for a clean shutdown
+terminate(_Reason, _StateName, State) ->
+  gen_server:cast(State#state.datasource_pid, kill),
+  ok.
 
 
 
 
 %%% Helper functions
 build_packet() ->
-  build_packet_somehow.
+  <<"The Datapacket">>.
 
 
 %%% OTP gen_fsm boilerplate - ignore this
@@ -83,9 +87,6 @@ handle_sync_event(_Event, _From, StateName, State) ->
 
 handle_info(_Info, StateName, State) ->
   {next_state, StateName, State}.
-
-terminate(_Reason, _StateName, _State) ->
-  ok.
 
 code_change(_OldVsn, StateName, State, _Extra) ->
   {ok, StateName, State}.
