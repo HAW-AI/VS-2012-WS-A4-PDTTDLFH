@@ -35,12 +35,12 @@ init([CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort]) ->
   register(sender, self()),
   gen_udp:controlling_process(SendingSocket, self()),
   {ok, DataSourcePID} = datasource:start(),
-  {ok, wait_for_slot, #state{datasource_pid  = DataSourcePID,
-                             sending_socket  = SendingSocket,
-                             multicast_ip    = MulticastIP,
-                             receiving_port  = ReceivingPort,
-                             coordinator_pid = CoordinatorPID
-                            }}.
+  {ok, waiting_for_slot, #state{datasource_pid  = DataSourcePID,
+                                sending_socket  = SendingSocket,
+                                multicast_ip    = MulticastIP,
+                                receiving_port  = ReceivingPort,
+                                coordinator_pid = CoordinatorPID
+                               }}.
 
 waiting_for_slot({slot, Slot}, State) ->
   io:format("waiting_for_slot: {slot, ~p}~n", [Slot]),
