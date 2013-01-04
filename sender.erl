@@ -22,7 +22,8 @@
                 multicast_ip,            % IP used for broadcast
                 receiving_port,          %
                 coordinator_pid :: pid(),% PID of the coordinator gen_server
-                slot                     % slot of each frame used for sending
+                slot,                    % slot of each frame used for sending
+                data                     % data to broadcast
                }).
 
 start(CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort) ->
@@ -51,20 +52,24 @@ waiting_for_slot(Event, State) ->
 
 waiting_for_input({input, Data}, State) ->
   io:format("waiting_for_input: {input, ~p}~n", [Data]),
-  %%% do something
-  {next_state, send_message, State};
+  gen_fsm:send_event_after(utility:time_until_slot(State#state.slot), {}),
+  {next_state, send_message, State#state{data = Data}};
 waiting_for_input(Event, State) ->
   io:format("waiting_for_input: unknown event: ~p~n", [Event]),
   {next_state, waiting_for_input, State}.
 
-send_message(Foobar, State) ->
+send_message({}, State) ->
+  io:format("send_message: {}~n", []),
   Packet = build_packet(), % TODO
 
   gen_udp:send(State#state.sending_socket,
                State#state.multicast_ip,
                State#state.receiving_port,
                Packet),
-  {next_state, waiting_for_slot, State}.
+  {next_state, waiting_for_slot, State};
+send_message(Event, State) ->
+  io:format("send_message: unknown event: ~p~n", [Event]),
+  {next_state, send_message, State}.
 
 handle_event(kill, _StateName, State) ->
   {stop, normal, State}.
