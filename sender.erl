@@ -32,6 +32,7 @@ start(CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort) ->
                           ReceivingPort], []).
 
 init([CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort]) ->
+  gen_udp:controlling_process(SendingSocket, self()),
   {ok, DataSourcePID} = datasource:start(),
   {ok, wait_for_slot, #state{datasource_pid  = DataSourcePID,
                              sending_socket  = SendingSocket,
@@ -66,6 +67,7 @@ handle_event(kill, _StateName, State) ->
 %%% do everything required for a clean shutdown
 terminate(_Reason, _StateName, State) ->
   gen_server:cast(State#state.datasource_pid, kill),
+  gen_udp:close(State#state.sending_socket),
   ok.
 
 

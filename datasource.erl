@@ -13,16 +13,16 @@
          terminate/2,
          code_change/3]).
 
--record(state, {}).
+-record(state, {input_reader_pid :: pid()}).
 
 start() ->
   gen_server:start(?MODULE, [], []).
 
 init([]) ->
   %%% start reading for the input source
-  spawn(fun() -> read_from_datasource(self()) end),
+  InputReaderPID = spawn(fun() -> read_from_datasource(self()) end),
 
-  {ok, #state{}}.
+  {ok, #state{input_reader_pid = InputReaderPID}}.
 
 handle_cast({input, Data}, State) ->
   %%% TODO handle input in here somehow
@@ -32,7 +32,8 @@ handle_cast(kill, State) ->
   {stop, normal, State}.
 
 %%% do everything required for a clean shutdown
-terminate(_Reason, _State) ->
+terminate(_Reason, State) ->
+  exit(State#state.input_reader_pid, normal),
   ok.
 
 
