@@ -66,23 +66,48 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
                                      ParsedMulticastIP,
                                      ReceivingPort),
 
-  {ok, #state{team_number         = TeamNumber,
-              station_number      = StationNumber,
-              current_slot        = get_random_slot(),
-              receiver_pid        = ReceiverPID,
-              sender_pid          = SenderPID,
-              slot_wishes         = dict:new(),
-              used_slots          = [],
-              own_packet_collided = false
+  {ok, #state{team_number         = TeamNumber,       %
+              station_number      = StationNumber,    % HOSTNAME##lab
+              current_slot        = get_random_slot(),% the slot we are trying to send in
+              receiver_pid        = ReceiverPID,      % PID of the receiver gen_server
+              sender_pid          = SenderPID,        % PID of the sender gen_server
+              slot_wishes         = dict:new(),       % [{SlotNumber,[Station1, Station2]}, ...]
+              used_slots          = [],               % list of all slots in use. determined by seen packets
+              own_packet_collided = false             % 
              }}.
 
 %%% async incoming messages
-handle_cast({received, _Slot, _Time, _Packet}, State) ->
-  %%% do something with the received data
-  {noreply, State};
+handle_cast({received, Slot, _Time, Packet}, State) ->
+  NewSlotwishes = register_slotwishes(Packet, State#state.slot_wishes),
+  case check_for_packet_collision(Slot, State) of
+    true ->
+      % check if the Slot of the packet is the same that we are sending in
+      case Slot == State#state.current_slot of
+        true ->
+          % Add slot to Slotwishes again so that it will be sorted out in the
+          % next round when we are checking for a free slot
+          SlotwishesWithCollision = dict:append(Slot,
+                                                State#state.station_number,
+                                                NewSlotwishes),
+          % TODO log own packet collision
+          {noreply, State#state{own_packet_collided = true,
+                                slot_wishes         = SlotwishesWithCollision}};
+        false ->
+          {noreply, State#state{own_packet_collided = false,
+                                slot_wishes         = NewSlotwishes}}
+      end;
+    false -> % no collision at all
+      UsedSlots = [Slot | State#state.used_slots],
+      {noreply, State#state{slot_wishes = NewSlotwishes,
+                            used_slots  = UsedSlots}}
+  end;
 
 handle_cast(kill, State) ->
-  {stop, normal, State}.
+  {stop, normal, State};
+
+handle_cast(UnknownMessage, State) ->
+  % TODO log UnknownMessage
+  {noreply, State}.
 
 %%% do everything required for a clean shutdown
 terminate(_Reason, State) ->
@@ -94,10 +119,40 @@ terminate(_Reason, State) ->
 get_random_slot() ->
   random:uniform(20) - 1.
 
+calculate_free_slot(Slotwishes) ->
+  NonCollisionSlots = dict:filter(
+    %%% Valid slots just have one sender.
+    fun(_,V) ->
+      length(V) == 1 %%% V = list of stations
+    end,
+    Slotwishes
+  ),
+  AvailableSlots = lists:subtract(lists:seq(0,19),
+                                  dict:fetch_keys(NonCollisionSlots)),
+  RandomElementIndex = random:uniform(length(AvailableSlots)),
+  lists:nth(RandomElementIndex, AvailableSlots).
 
+%%% returns true when the Slot collided else false.
+-spec check_for_packet_collision(Slot :: integer(), #state{}) -> true | false.
+check_for_packet_collision(Slot, State) ->
+  lists:member(Slot, State#state.used_slots) orelse Slot == State#state.current_slot.
 
+%%% adds the slot a packet was sent in to the list of used slots
+-spec register_slotwishes(Packet :: binary(), Slotwishes :: dict()) -> dict().
+register_slotwishes(Packet, Slotwishes) ->
+  {StationNumber, Slot, _, _} = parse_message(Packet),
+  dict:append(Slot, StationNumber, Slotwishes).
 
-
+%%% TODO handle malformed packets
+parse_message(Packet) ->
+  <<_StationIdentifier:8/binary,
+    StationNumber:16/integer-big,
+    PayloadBin:14/binary,
+    Slot:8/integer-big,
+    Timestamp:64/integer-big
+  >> = Packet,
+  Payload = binary_to_list(PayloadBin),
+  {StationNumber, Slot, Payload, Timestamp}.
 
 %%% OTP gen_server boilerplate - ignore this
 handle_info(_Info, State) ->

@@ -17,12 +17,12 @@
          terminate/3,
          code_change/4]).
 
--record(state, {datasource_pid :: pid(),
-                sending_socket,
-                multicast_ip,
-                receiving_port,
-                coordinator_pid :: pid(),
-                slot
+-record(state, {datasource_pid :: pid(), % PID of the datasource gen_server
+                sending_socket,          % 
+                multicast_ip,            % IP used for broadcast
+                receiving_port,          % 
+                coordinator_pid :: pid(),% PID of the coordinator gen_server
+                slot                     % slot of each frame used for sending
                }).
 
 start(CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort) ->
