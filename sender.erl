@@ -32,6 +32,7 @@ start(CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort) ->
                           ReceivingPort], []).
 
 init([CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort]) ->
+  register(sender, self()),
   gen_udp:controlling_process(SendingSocket, self()),
   {ok, DataSourcePID} = datasource:start(),
   {ok, wait_for_slot, #state{datasource_pid  = DataSourcePID,
