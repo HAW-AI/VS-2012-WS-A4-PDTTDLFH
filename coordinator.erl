@@ -65,7 +65,9 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
                                      SendingSocket,
                                      ParsedMulticastIP,
                                      ReceivingPort),
-
+  %%% start timer for first sending round
+  create_prepare_sending_timer(),
+									 
   {ok, #state{team_number         = TeamNumber,       %
               station_number      = StationNumber,    % HOSTNAME##lab
               current_slot        = get_random_slot(),% the slot we are trying to send in
@@ -75,6 +77,19 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
               used_slots          = [],               % list of all slots in use. determined by seen packets
               own_packet_collided = false             % 
              }}.
+			 
+handle_cast(prepare_sending, State) ->
+	%start timer for next sending round
+	create_prepare_sending_timer(),
+	case State#state.own_packet_collided of
+		true ->
+			NewCurrentSlot = calculate_free_slot(State#state.slot_wishes);
+		false ->
+			NewCurrentSlot = State#state.current_slot
+	end,
+	gen_fsm:send_event(State#state.sender_pid, {slot, NewCurrentSlot}),
+	%resetting state for next round except for the new slot
+	{noreply, State#state{current_slot = NewCurrentSlot, slot_wishes = dict:new(), used_slots=[], own_packet_collided = false}};
 
 %%% async incoming messages
 handle_cast({received, Slot, _Time, Packet}, State) ->
@@ -130,6 +145,9 @@ terminate(_Reason, State) ->
   ok.
 
 %%%%% Helpers
+create_prepare_sending_timer() ->
+	erlang:send_after(1000 - (utility:current_timestamp() rem 1000),self(),prepare_sending).
+
 get_random_slot() ->
   random:uniform(20) - 1.
 
