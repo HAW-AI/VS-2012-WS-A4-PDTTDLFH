@@ -20,4 +20,7 @@ slot_of_timestamp(Timestamp) ->
 
 % time in milliseconds until slot in _next_ frame
 time_until_slot(Slot) ->
-  (?NUM_SLOTS - (slot_of_timestamp(current_timestamp()) - Slot)) * ?SLOT_TIME.
+  CurrentTime = current_timestamp(),
+  CurrentSlot = slot_of_timestamp(CurrentTime),
+  ElapsedTime = CurrentTime rem ?SLOT_TIME,     % elapsed time since beginning of current slot
+  (?NUM_SLOTS - (CurrentSlot - Slot)) * ?SLOT_TIME - ElapsedTime + ?SLOT_TIME div 2.
