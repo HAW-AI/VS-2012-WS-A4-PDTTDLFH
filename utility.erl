@@ -16,7 +16,7 @@ current_frame() ->
  % Timestamp rem 1000 => ms part of timestamp
  % ms part / 50 => the slot cause 1000 ms / 50 => 20 slots
 slot_of_timestamp(Timestamp) ->
-	trunc(((Timestamp rem 1000) / 50)).
+	trunc(((Timestamp rem 1000) / ?SLOT_TIME)).
 
 % time in milliseconds until slot in _next_ frame
 time_until_slot(Slot) ->
