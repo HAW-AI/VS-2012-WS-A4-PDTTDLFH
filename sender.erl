@@ -46,6 +46,7 @@ init([CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort]) ->
 
 waiting_for_slot({slot, Slot}, State) ->
   io:format("waiting_for_slot: {slot, ~p}~n", [Slot]),
+  gen_server:cast(State#state.coordinator_pid,{get_data, self()}), %is that ok? perhaps changing state is too slow?
   {next_state, waiting_for_input, State#state{slot = Slot}};
 waiting_for_slot(Event, State) ->
   io:format("waiting_for_slot: unknown event: ~p~n", [Event]),
@@ -59,10 +60,9 @@ waiting_for_input(Event, State) ->
   io:format("waiting_for_input: unknown event: ~p~n", [Event]),
   {next_state, waiting_for_input, State}.
 
- %TODO compiler says its unused... why?
 validating_next_slot({}, State) ->
   io:format("validating_next_slot: {}~n", []),
-  gen_server:cast(State#state.coordinator_pid,{validate_next_slot, State#state.slot}),
+  gen_server:cast(State#state.coordinator_pid,{validate_next_slot, State#state.slot}), %is that ok? perhaps changing state is too slow?
   {next_state, send_message, State};
 validating_next_slot(Event, State) ->
   io:format("validating_next_slot: unknown event: ~p~n", [Event]),
