@@ -101,6 +101,20 @@ handle_cast({received, Slot, _Time, Packet}, State) ->
       {noreply, State#state{slot_wishes = NewSlotwishes,
                             used_slots  = UsedSlots}}
   end;
+ 
+handle_cast({validate_next_slot, CurrentNextSlot}, State) ->
+	io:format("coordinator: validating current next slot~n"),
+	case dict:is_key(CurrentNextSlot, State#state.slot_wishes) of
+		true -> %wish for slot, choose another
+			io:format("coordinator: invalid - calculating new slot~n"),
+			NewNextSlot = calculate_free_slot(State#state.slot_wishes),
+			gen_fsm:send_event(State#state.sender_pid, {next_slot, NewNextSlot}),
+			{noreply, State#state{current_slot = NewNextSlot}};
+		false -> %still free, keep it
+			io:format("coordinator: valid - just go on~n"),
+			gen_fsm:send_event(State#state.sender_pid, {next_slot, CurrentNextSlot}),
+			{noreply, State}
+	end;
 
 handle_cast(kill, State) ->
   {stop, normal, State};

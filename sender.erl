@@ -53,15 +53,23 @@ waiting_for_slot(Event, State) ->
 waiting_for_input({input, Data}, State) ->
   io:format("waiting_for_input: {input, ~p}~n", [Data]),
   gen_fsm:send_event_after(utility:time_until_slot(State#state.slot), {}),
-  {next_state, send_message, State#state{data = Data}};
+  {next_state, validating_next_slot, State#state{data = Data}};
 waiting_for_input(Event, State) ->
   io:format("waiting_for_input: unknown event: ~p~n", [Event]),
   {next_state, waiting_for_input, State}.
 
-send_message({}, State) ->
+ %TODO compiler says its unused... why?
+validating_next_slot({}, State) ->
+  io:format("validating_next_slot: {}~n", []),
+  gen_server:cast(State#state.coordinator_pid,{validate_next_slot, State#state.slot}),
+  {next_state, send_message, State};
+validating_next_slot(Event, State) ->
+  io:format("validating_next_slot: unknown event: ~p~n", [Event]),
+  {next_state, validating_next_slot, State}.  
+  
+send_message({next_slot, NextSlot}, State) ->
   io:format("send_message: {}~n", []),
-  Packet = build_packet(State#state.data, 0), % TODO: actual slot wish
-
+  Packet = build_packet(State#state.data, NextSlot),
   gen_udp:send(State#state.sending_socket,
                State#state.multicast_ip,
                State#state.receiving_port,
