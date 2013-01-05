@@ -85,14 +85,12 @@ terminate(_Reason, _StateName, State) ->
 
 %%% Helper functions
 build_packet(Data, Slotwish) ->
-  EncodedStationName = list_to_binary("0123456789"), % TODO: actual station name
-  EncodedData        = list_to_binary(Data), % must be of correct size or bad things will happen
-  EncodedTimestamp   = utility:current_timestamp(),
+  EncodedData = list_to_binary(Data),
+  Timestamp   = utility:current_timestamp(),
 
-  <<EncodedStationName:10/binary,
-    EncodedData:14/binary,
-    Slotwish:8/integer,
-    EncodedTimestamp:64/integer
+  <<EncodedData:24/binary,
+    Slotwish:8/integer-big,
+    Timestamp:64/integer-big
   >>.
 
 
