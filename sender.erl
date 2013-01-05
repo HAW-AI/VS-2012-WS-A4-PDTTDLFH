@@ -60,7 +60,7 @@ waiting_for_input(Event, State) ->
 
 send_message({}, State) ->
   io:format("send_message: {}~n", []),
-  Packet = build_packet(), % TODO
+  Packet = build_packet(State#state.data, 0), % TODO: actual slot wish
 
   gen_udp:send(State#state.sending_socket,
                State#state.multicast_ip,
@@ -84,8 +84,16 @@ terminate(_Reason, _StateName, State) ->
 
 
 %%% Helper functions
-build_packet() ->
-  <<"The Datapacket">>.
+build_packet(Data, Slotwish) ->
+  EncodedStationName = list_to_binary("0123456789"), % TODO: actual station name
+  EncodedData        = list_to_binary(Data), % must be of correct size or bad things will happen
+  EncodedTimestamp   = utility:current_timestamp(),
+
+  <<EncodedStationName:10/binary,
+    EncodedData:14/binary,
+    Slotwish:8/integer,
+    EncodedTimestamp:64/integer
+  >>.
 
 
 %%% OTP gen_fsm boilerplate - ignore this
