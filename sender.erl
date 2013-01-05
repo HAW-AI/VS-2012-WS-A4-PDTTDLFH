@@ -9,6 +9,7 @@
 -export([init/1,
          waiting_for_slot/2,
          waiting_for_input/2,
+         validating_next_slot/2,
          send_message/2,
          state_name/3,
          handle_event/3,
@@ -65,8 +66,8 @@ validating_next_slot({}, State) ->
   {next_state, send_message, State};
 validating_next_slot(Event, State) ->
   io:format("validating_next_slot: unknown event: ~p~n", [Event]),
-  {next_state, validating_next_slot, State}.  
-  
+  {next_state, validating_next_slot, State}.
+
 send_message({next_slot, NextSlot}, State) ->
   io:format("send_message: {}~n", []),
   Packet = build_packet(State#state.data, NextSlot),
