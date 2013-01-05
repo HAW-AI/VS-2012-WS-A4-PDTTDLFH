@@ -23,4 +23,7 @@ time_until_slot(Slot) ->
   CurrentTime = current_timestamp(),
   CurrentSlot = slot_of_timestamp(CurrentTime),
   ElapsedTime = CurrentTime rem ?SLOT_TIME,     % elapsed time since beginning of current slot
+
+  % (?NUM_SLOTS - (CurrentSlot - Slot)): distance to desired slot in next frame (in number of slots)
+  % <distance to desired slot> * <time of slot> - <already elapsed time> + <time to be in middle of slot>
   (?NUM_SLOTS - (CurrentSlot - Slot)) * ?SLOT_TIME - ElapsedTime + ?SLOT_TIME div 2.
