@@ -81,11 +81,11 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
 handle_cast(prepare_sending, State) ->
 	%start timer for next sending round
 	create_prepare_sending_timer(),
-	case State#state.own_packet_collided of
+	NewCurrentSlot = case State#state.own_packet_collided of
 		true ->
-			NewCurrentSlot = calculate_free_slot(State#state.slot_wishes);
+			calculate_free_slot(State#state.slot_wishes);
 		false ->
-			NewCurrentSlot = State#state.current_slot
+			State#state.current_slot
 	end,
 	gen_fsm:send_event(State#state.sender_pid, {slot, NewCurrentSlot}),
 	%resetting state for next round except for the new slot
@@ -134,7 +134,7 @@ handle_cast({validate_next_slot, CurrentNextSlot}, State) ->
 handle_cast(kill, State) ->
   {stop, normal, State};
 
-handle_cast(UnknownMessage, State) ->
+handle_cast(_UnknownMessage, State) ->
   % TODO log UnknownMessage
   {noreply, State}.
 
