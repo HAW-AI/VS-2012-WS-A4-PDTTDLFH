@@ -45,31 +45,31 @@ init([CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort]) ->
                                }}.
 
 waiting_for_slot({slot, Slot}, State) ->
-  io:format("waiting_for_slot: {slot, ~p}~n", [Slot]),
+  utility:log(io:format("waiting_for_slot: {slot, ~p}~n", [Slot])),
   gen_server:cast(State#state.coordinator_pid,{get_data, self()}), %is that ok? perhaps changing state is too slow?
   {next_state, waiting_for_input, State#state{slot = Slot}};
 waiting_for_slot(Event, State) ->
-  io:format("waiting_for_slot: unknown event: ~p~n", [Event]),
+  utility:log(io:format("waiting_for_slot: unknown event: ~p~n", [Event])),
   {next_state, waiting_for_slot, State}.
 
 waiting_for_input({input, Data}, State) ->
-  io:format("waiting_for_input: {input, ~p}~n", [Data]),
+  utility:log(io:format("waiting_for_input: {input, ~p}~n", [Data])),
   gen_fsm:send_event_after(utility:time_until_slot(State#state.slot), {}),
   {next_state, validating_next_slot, State#state{data = Data}};
 waiting_for_input(Event, State) ->
-  io:format("waiting_for_input: unknown event: ~p~n", [Event]),
+  utility:log(io:format("waiting_for_input: unknown event: ~p~n", [Event])),
   {next_state, waiting_for_input, State}.
 
 validating_next_slot({}, State) ->
-  io:format("validating_next_slot: {}~n", []),
+  utility:log(io:format("validating_next_slot: {}~n", [])),
   gen_server:cast(State#state.coordinator_pid,{validate_next_slot, State#state.slot}), %is that ok? perhaps changing state is too slow?
   {next_state, send_message, State};
 validating_next_slot(Event, State) ->
-  io:format("validating_next_slot: unknown event: ~p~n", [Event]),
+  utility:log(io:format("validating_next_slot: unknown event: ~p~n", [Event])),
   {next_state, validating_next_slot, State}.
 
 send_message({next_slot, NextSlot}, State) ->
-  io:format("send_message: {}~n", []),
+  utility:log(io:format("send_message: {}~n", [])),
   Packet = build_packet(State#state.data, NextSlot),
   gen_udp:send(State#state.sending_socket,
                State#state.multicast_ip,
@@ -77,7 +77,7 @@ send_message({next_slot, NextSlot}, State) ->
                Packet),
   {next_state, waiting_for_slot, State};
 send_message(Event, State) ->
-  io:format("send_message: unknown event: ~p~n", [Event]),
+  utility:log(io:format("send_message: unknown event: ~p~n", [Event])),
   {next_state, send_message, State}.
 
 handle_event(kill, _StateName, State) ->

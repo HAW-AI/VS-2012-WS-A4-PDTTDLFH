@@ -20,26 +20,26 @@ start() ->
 
 init([]) ->
   %%% start reading for the input source
-  io:format("datasource init"),
+  utility:log("datasource init"),
   InputReaderPID = spawn(fun() -> read_from_datasource(self()) end),
 
   {ok, #state{input_reader_pid = InputReaderPID}}.
 
 handle_cast({input, Data}, State) ->
-  io:format("new data stored: ~p~n",[Data]),
+  utility:log("new data stored: ~p~n",[Data]),
   {noreply, State#state{current_data=Data}};
 
 handle_cast({get_data, PID}, State) ->
-  io:format("data transfered to sender: ~p~n",[State#state.current_data]),
+  utility:log(io_lib:format("data transfered to sender: ~p~n",[State#state.current_data])),
   gen_fsm:send_event(PID,{input, State#state.current_data}),
   {noreply, State#state{current_data=[]}};
 
 handle_cast(kill, State) ->
-  io:format("datasource killed"),
+  utility:log("datasource killed"),
   {stop, normal, State};
 
 handle_cast(Any, State) ->
-  io:format("received unknown msg: ~p~n",[Any]),
+  utility:log(io_lib:format("received unknown msg: ~p~n",[Any])),
   {noreply, State}.
 
 %%% do everything required for a clean shutdown
@@ -66,7 +66,7 @@ handle_call(_Request, _From, State) ->
   {reply, Reply, State}.
 
 handle_info(_Info, State) ->
-  io:format("how about sending gen server a msg in a proper way"),
+  utility:log(io_lib:format("how about sending gen server a msg in a proper way")),
   {noreply, State}.
 
 code_change(_OldVsn, State, _Extra) ->

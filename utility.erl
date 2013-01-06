@@ -1,5 +1,6 @@
 -module(utility).
--compile(export_all).
+-export([current_timestamp/0, current_frame/0, slot_of_timestamp/1,
+         time_until_slot/1, log/1]).
 
 -define(NUM_SLOTS, 20).
 -define(SLOT_TIME, 50). % in milliseconds
@@ -27,3 +28,10 @@ time_until_slot(Slot) ->
   % (?NUM_SLOTS - (CurrentSlot - Slot)): distance to desired slot in next frame (in number of slots)
   % <distance to desired slot> * <time of slot> - <already elapsed time> + <time to be in middle of slot>
   (?NUM_SLOTS - (CurrentSlot - Slot)) * ?SLOT_TIME - ElapsedTime + ?SLOT_TIME div 2.
+
+log(Message) ->
+  LogMessage = lists:concat([werkzeug:timeMilliSecond(),
+                             " - ",
+                             Message,
+                             io_lib:nl()]),
+  werkzeug:logging(lists:concat([net_adm:localhost(), ".log"]), LogMessage).
