@@ -117,8 +117,8 @@ handle_cast({received, Slot, _Time, Packet}, State) ->
                             used_slots  = UsedSlots}}
   end;
  
-handle_cast({validate_next_slot, CurrentNextSlot}, State) ->
-	utility:log("coordinator: validating current next slot"),
+handle_cast({revise_next_slot, CurrentNextSlot}, State) ->
+	utility:log("coordinator: revising current next slot"),
 	case dict:is_key(CurrentNextSlot, State#state.slot_wishes) of
 		true -> %wish for slot, choose another
 			utility:log("coordinator: invalid - calculating new slot"),

@@ -9,7 +9,7 @@
 -export([init/1,
          waiting_for_slot/2,
          waiting_for_input/2,
-         validating_next_slot/2,
+         revising_next_slot/2,
          send_message/2,
          state_name/3,
          handle_event/3,
@@ -55,18 +55,18 @@ waiting_for_slot(Event, State) ->
 waiting_for_input({input, Data}, State) ->
   utility:log(io:format("waiting_for_input: {input, ~p}~n", [Data])),
   gen_fsm:send_event_after(utility:time_until_slot(State#state.slot), {}),
-  {next_state, validating_next_slot, State#state{data = Data}};
+  {next_state, revising_next_slot, State#state{data = Data}};
 waiting_for_input(Event, State) ->
   utility:log(io:format("waiting_for_input: unknown event: ~p~n", [Event])),
   {next_state, waiting_for_input, State}.
 
-validating_next_slot({}, State) ->
-  utility:log(io:format("validating_next_slot: {}~n", [])),
-  gen_server:cast(State#state.coordinator_pid,{validate_next_slot, State#state.slot}), %is that ok? perhaps changing state is too slow?
+revising_next_slot({}, State) ->
+  utility:log(io:format("revising_next_slot: {}~n", [])),
+  gen_server:cast(State#state.coordinator_pid,{revise_next_slot, State#state.slot}), %is that ok? perhaps changing state is too slow?
   {next_state, send_message, State};
-validating_next_slot(Event, State) ->
-  utility:log(io:format("validating_next_slot: unknown event: ~p~n", [Event])),
-  {next_state, validating_next_slot, State}.
+revising_next_slot(Event, State) ->
+  utility:log(io:format("revising_next_slot: unknown event: ~p~n", [Event])),
+  {next_state, revising_next_slot, State}.
 
 send_message({next_slot, NextSlot}, State) ->
   utility:log(io:format("send_message: {}~n", [])),
