@@ -53,10 +53,11 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
   {ok, SendingSocket} = gen_udp:open(SendingPort,
                                      [binary,
                                       {active, true},
-                                      {ip, ParsedLocalIP},
+                                      {multicast_if, ParsedLocalIP},
                                       inet,
                                       {multicast_loop, false},
-                                      {multicast_if, ParsedLocalIP}
+                                      {ip, ParsedLocalIP},
+                                      {reuseaddr, true} % reuse open port on local machine
                                      ]),
 
   %%% start the receiver and sender processes
