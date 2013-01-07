@@ -46,7 +46,7 @@ init([CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort]) ->
 
 waiting_for_slot({slot, Slot}, State) ->
   utility:log(io:format("waiting_for_slot: {slot, ~p}~n", [Slot])),
-  gen_server:cast(State#state.coordinator_pid,{get_data, self()}),
+  gen_server:cast(State#state.datasource_pid,{get_data, self()}),
   {next_state, waiting_for_input, State#state{slot = Slot}};
 waiting_for_slot(Event, State) ->
   utility:log(io:format("waiting_for_slot: unknown event: ~p~n", [Event])),
