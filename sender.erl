@@ -46,7 +46,7 @@ init([CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort]) ->
 
 waiting_for_slot({slot, Slot}, State) ->
   utility:log(io:format("waiting_for_slot: {slot, ~p}~n", [Slot])),
-  gen_server:cast(State#state.coordinator_pid,{get_data, self()}), %is that ok? perhaps changing state is too slow?
+  gen_server:cast(State#state.datasource_pid,{get_data, self()}),
   {next_state, waiting_for_input, State#state{slot = Slot}};
 waiting_for_slot(Event, State) ->
   utility:log(io:format("waiting_for_slot: unknown event: ~p~n", [Event])),
@@ -62,7 +62,7 @@ waiting_for_input(Event, State) ->
 
 revising_next_slot(revise_next_slot, State) ->
   utility:log(io:format("revising_next_slot: {}~n", [])),
-  gen_server:cast(State#state.coordinator_pid,{revise_next_slot, State#state.slot}), %is that ok? perhaps changing state is too slow?
+  gen_server:cast(State#state.coordinator_pid,{revise_next_slot, State#state.slot}),
   {next_state, send_message, State};
 revising_next_slot(Event, State) ->
   utility:log(io:format("revising_next_slot: unknown event: ~p~n", [Event])),
