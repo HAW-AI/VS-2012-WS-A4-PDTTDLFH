@@ -161,8 +161,13 @@ calculate_free_slot(Slotwishes) ->
   ),
   AvailableSlots = lists:subtract(lists:seq(0,19),
                                   dict:fetch_keys(NonCollisionSlots)),
-  RandomElementIndex = random:uniform(length(AvailableSlots)),
-  lists:nth(RandomElementIndex, AvailableSlots).
+  case length(AvailableSlots) == 0 of
+	true ->
+	  get_random_slot();
+	false ->
+	  RandomElementIndex = random:uniform(length(AvailableSlots)),
+	  lists:nth(RandomElementIndex, AvailableSlots)
+   end.
 
 %%% returns true when the Slot collided else false.
 -spec check_for_packet_collision(Slot :: integer(), #state{}) -> true | false.
