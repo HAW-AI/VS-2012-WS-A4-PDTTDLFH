@@ -54,13 +54,13 @@ waiting_for_slot(Event, State) ->
 
 waiting_for_input({input, Data}, State) ->
   utility:log(io:format("waiting_for_input: {input, ~p}~n", [Data])),
-  gen_fsm:send_event_after(utility:time_until_slot(State#state.slot), {}),
+  gen_fsm:send_event_after(utility:time_until_slot(State#state.slot), revise_next_slot),
   {next_state, revising_next_slot, State#state{data = Data}};
 waiting_for_input(Event, State) ->
   utility:log(io:format("waiting_for_input: unknown event: ~p~n", [Event])),
   {next_state, waiting_for_input, State}.
 
-revising_next_slot({}, State) ->
+revising_next_slot(revise_next_slot, State) ->
   utility:log(io:format("revising_next_slot: {}~n", [])),
   gen_server:cast(State#state.coordinator_pid,{revise_next_slot, State#state.slot}), %is that ok? perhaps changing state is too slow?
   {next_state, send_message, State};
