@@ -23,17 +23,27 @@
                 own_packet_collided}).
 
 easy_start() ->
-  start([15100, 8, 99, '225.10.1.2', '141.22.27.102']).
+  start(['1337', '08', '99', '127.0.0.1', '127.0.0.1']).
 
-start([ReceivingPort, TeamNumber, StationNumber, MulticastIP, LocalIP]) ->
-  SendingPort = 14000 + TeamNumber,
+start([ReceivingPortAtom, TeamNumberAtom, StationNumberAtom, MulticastIPAtom, LocalIPAtom]) ->
+  SendingPort = 14000 + atom_to_integer(TeamNumberAtom),
   gen_server:start(?MODULE,
-                   [ReceivingPort, SendingPort, TeamNumber, StationNumber,
-                    MulticastIP, LocalIP], []);
-start([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalIP]) ->
+                  [atom_to_integer(ReceivingPortAtom),
+                   SendingPort,
+                   atom_to_list(TeamNumberAtom),
+                   atom_to_list(StationNumberAtom),
+                   MulticastIPAtom,
+                   LocalIPAtom],
+                  []);
+start([ReceivingPortAtom, SendingPortAtom, TeamNumberAtom, StationNumberAtom, MulticastIPAtom, LocalIPAtom]) ->
   gen_server:start(?MODULE,
-                   [ReceivingPort, SendingPort, TeamNumber, StationNumber,
-                    MulticastIP, LocalIP], []).
+                  [atom_to_integer(ReceivingPortAtom),
+                   atom_to_integer(SendingPortAtom),
+                   atom_to_list(TeamNumberAtom),
+                   atom_to_list(StationNumberAtom),
+                   MulticastIPAtom,
+                   LocalIPAtom],
+                  []).
 
 init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalIP]) ->
   %%% seed process' random number generator
@@ -79,7 +89,7 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
   gen_udp:controlling_process(SendingSocket,SenderPID),
   %%% start timer for first sending round
   create_prepare_sending_timer(),
-									 
+
   {ok, #state{team_number         = TeamNumber,       %
               station_number      = StationNumber,    % HOSTNAME##lab
               current_slot        = get_random_slot(),% the slot we are trying to send in
@@ -87,9 +97,9 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
               sender_pid          = SenderPID,        % PID of the sender gen_server
               slot_wishes         = dict:new(),       % [{SlotNumber,[Station1, Station2]}, ...]
               used_slots          = [],               % list of all slots in use. determined by seen packets
-              own_packet_collided = false             % 
+              own_packet_collided = false             %
              }}.
-			 
+
 handle_cast(prepare_sending, State) ->
 	%start timer for next sending round
 	utility:log("lets start a new round"),
@@ -130,7 +140,7 @@ handle_cast({received, Slot, _Time, Packet}, State) ->
       {noreply, State#state{slot_wishes = NewSlotwishes,
                             used_slots  = UsedSlots}}
   end;
- 
+
 handle_cast({revise_next_slot, CurrentNextSlot}, State) ->
 	utility:log("coordinator: revising current next slot"),
 	case dict:is_key(CurrentNextSlot, State#state.slot_wishes) of
@@ -160,6 +170,9 @@ terminate(_Reason, State) ->
   ok.
 
 %%%%% Helpers
+atom_to_integer(Atom) ->
+  list_to_integer(atom_to_list(Atom)).
+
 create_prepare_sending_timer() ->
 utility:log("creating timer"),
 	erlang:send_after(1000 - (utility:current_timestamp() rem 1000),self(),prepare_sending).
