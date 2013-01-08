@@ -3,7 +3,7 @@
 -behaviour(gen_server).
 
 %% API
--export([start/2]).
+-export([start/3]).
 
 %% gen_server callbacks
 -export([init/1,
@@ -14,13 +14,14 @@
          code_change/3]).
 
 -record(state, {coordinator_pid :: pid(),
-                receiving_socket}).
+                receiving_socket,
+				own_ip}).
 
-start(CoordinatorPID, ReceivingSocket) ->
-  gen_server:start(?MODULE, [CoordinatorPID, ReceivingSocket], []).
+start(CoordinatorPID, ReceivingSocket, LocalIp) ->
+  gen_server:start(?MODULE, [CoordinatorPID, ReceivingSocket, LocalIp], []).
 
-init([CoordinatorPID, ReceivingSocket]) ->
-  {ok, #state{coordinator_pid  = CoordinatorPID, receiving_socket = ReceivingSocket}}.
+init([CoordinatorPID, ReceivingSocket, LocalIp]) ->
+  {ok, #state{coordinator_pid  = CoordinatorPID, receiving_socket = ReceivingSocket, own_ip = LocalIp}}.
 
 handle_cast(kill, State) ->
   utility:log("receiver: received kill message"),
@@ -37,11 +38,16 @@ terminate(_Reason, State) ->
   utility:log("receiver: terminated"),
   ok.
 
-handle_info({udp, _Socket, _IPtuple, _InPortNo, Packet}, State) ->
-  utility:log("receiver: received packet"),
-  Timestamp = utility:current_timestamp(),
-  Slot      = utility:slot_of_timestamp(Timestamp),
-  gen_server:cast(State#state.coordinator_pid, {received, Slot, Timestamp, Packet}),
+handle_info({udp, _Socket, IPtuple, _InPortNo, Packet}, State) ->
+  case inet_parse:ntoa(IPtuple) == atom_to_list(State#state.own_ip) of
+    true ->
+	  utility:log("receiver: received own packet");
+    false ->
+	  utility:log("receiver: received packet~p~n",[IPtuple]),
+	  Timestamp = utility:current_timestamp(),
+	  Slot      = utility:slot_of_timestamp(Timestamp),
+	  gen_server:cast(State#state.coordinator_pid, {received, Slot, Timestamp, Packet})
+  end,
   {noreply, State};
   
 %%% OTP gen_server boilerplate - ignore this

@@ -60,7 +60,7 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
                                         {active, true},
                                         {multicast_if, ParsedLocalIP},
                                         inet,
-					{reuseaddr, true}, % reuse open port on local machine
+					%{reuseaddr, true}, % reuse open port on local machine
                                         {multicast_loop, true},
                                         {add_membership, {ParsedMulticastIP,
                                                           ParsedLocalIP}}
@@ -79,7 +79,7 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
 									 
   utility:log("sending socket ~p~n",[inet:port(SendingSocket)]),
   %%% start the receiver and sender processes
-  {ok, ReceiverPID} = receiver:start(self(), ReceivingSocket),
+  {ok, ReceiverPID} = receiver:start(self(), ReceivingSocket, LocalIP),
   {ok, SenderPID}   =   sender:start(self(),
                                      SendingSocket,
                                      ParsedMulticastIP,
