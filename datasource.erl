@@ -27,7 +27,7 @@ init([]) ->
   {ok, #state{input_reader_pid = InputReaderPID}}.
 
 handle_cast({input, Data}, State) ->
-  utility:log("new data stored: ~p~n",[Data]),
+  %utility:log("new data stored: ~p~n",[Data]),
   {noreply, State#state{current_data=Data}};
 
 handle_cast({get_data, PID}, State) ->
