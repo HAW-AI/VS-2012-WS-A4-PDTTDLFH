@@ -21,7 +21,8 @@ start() ->
 init([]) ->
   %%% start reading for the input source
   utility:log("datasource init"),
-  InputReaderPID = spawn(fun() -> read_from_datasource(self()) end),
+  DatasourcePID = self(),
+  InputReaderPID = spawn(fun() -> read_from_datasource(DatasourcePID) end),
 
   {ok, #state{input_reader_pid = InputReaderPID}}.
 
@@ -49,7 +50,6 @@ terminate(_Reason, State) ->
 
 read_from_datasource(DatasourcePID) ->
   case io:get_chars("", 24) of
-    %%% TODO log something
     eof ->
       exit(normal);
     {error, Reason} ->

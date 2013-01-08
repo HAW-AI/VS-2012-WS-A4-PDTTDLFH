@@ -3,7 +3,7 @@
 -behaviour(gen_server).
 
 %% API
--export([start/1]).
+-export([easy_start/0, start/1]).
 
 %% gen_server callbacks
 -export([init/1,
@@ -21,6 +21,9 @@
                 slot_wishes,
                 used_slots,
                 own_packet_collided}).
+
+easy_start() ->
+  start([1337, 08, 99, '127.0.0.1', '127.0.0.1']).
 
 start([ReceivingPort, TeamNumber, StationNumber, MulticastIP, LocalIP]) ->
   SendingPort = 14000 + TeamNumber,

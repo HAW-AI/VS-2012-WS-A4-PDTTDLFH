@@ -1,6 +1,6 @@
 -module(utility).
 -export([current_timestamp/0, current_frame/0, slot_of_timestamp/1,
-         time_until_slot/1, log/1]).
+         time_until_slot/1, log/1, log/2]).
 
 -define(NUM_SLOTS, 20).
 -define(SLOT_TIME, 50). % in milliseconds
@@ -35,3 +35,6 @@ log(Message) ->
                              Message,
                              io_lib:nl()]),
   werkzeug:logging(lists:concat([net_adm:localhost(), ".log"]), LogMessage).
+
+log(Format, Args) ->
+  werkzeug:logging(lists:concat([net_adm:localhost(), ".log"]), io_lib:format(Format, Args)).
