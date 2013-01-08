@@ -43,9 +43,10 @@ handle_info({udp, _Socket, IPtuple, _InPortNo, Packet}, State) ->
     true ->
 	  utility:log("receiver: received own packet");
     false ->
-	  utility:log("receiver: received packet~p~n",[IPtuple]),
 	  Timestamp = utility:current_timestamp(),
 	  Slot      = utility:slot_of_timestamp(Timestamp),
+	  utility:log("receiver: received packet~p~n",[IPtuple]),
+	  utility:log("seams to be in slot ~p~n",[Slot]),
 	  gen_server:cast(State#state.coordinator_pid, {received, Slot, Timestamp, Packet})
   end,
   {noreply, State};
