@@ -34,7 +34,7 @@ log(Message) ->
                              " - ",
                              Message,
                              io_lib:nl()]),
-  werkzeug:logging(lists:concat([net_adm:localhost(), ".log"]), LogMessage).
+  werkzeug:logging(lists:concat(["log/", net_adm:localhost(), ".log"]), LogMessage).
 
 log(Format, Args) ->
-  werkzeug:logging(lists:concat([net_adm:localhost(), ".log"]), io_lib:format(Format, Args)).
+  werkzeug:logging(lists:concat(["log/", net_adm:localhost(), ".log"]), io_lib:format(Format, Args)).
