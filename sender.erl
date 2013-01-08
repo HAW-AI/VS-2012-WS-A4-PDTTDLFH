@@ -34,8 +34,6 @@ start(CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort) ->
                           ReceivingPort], []).
 
 init([CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort]) ->
-  register(sender, self()),
-  gen_udp:controlling_process(SendingSocket, self()),
   {ok, DataSourcePID} = datasource:start(),
   {ok, waiting_for_slot, #state{datasource_pid  = DataSourcePID,
                                 sending_socket  = SendingSocket,
@@ -61,7 +59,7 @@ waiting_for_input(Event, State) ->
   {next_state, waiting_for_input, State}.
 
 revising_next_slot(revise_next_slot, State) ->
-  utility:log(io:format("revising_next_slot: {}~n", [])),
+  utility:log(io:format("revising_next_slot: ~p~n", [State#state.slot])),
   gen_server:cast(State#state.coordinator_pid,{revise_next_slot, State#state.slot}),
   {next_state, send_message, State};
 revising_next_slot(Event, State) ->
@@ -69,7 +67,7 @@ revising_next_slot(Event, State) ->
   {next_state, revising_next_slot, State}.
 
 send_message({next_slot, NextSlot}, State) ->
-  utility:log(io:format("send_message: {}~n", [])),
+  utility:log(io:format("send_message: next_slot ~p~n", [NextSlot])),
   Packet = build_packet(State#state.data, NextSlot),
   gen_udp:send(State#state.sending_socket,
                State#state.multicast_ip,

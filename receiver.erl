@@ -20,7 +20,6 @@ start(CoordinatorPID, ReceivingSocket) ->
   gen_server:start(?MODULE, [CoordinatorPID, ReceivingSocket], []).
 
 init([CoordinatorPID, ReceivingSocket]) ->
-  gen_udp:controlling_process(ReceivingSocket, self()),
   {ok, #state{coordinator_pid  = CoordinatorPID, receiving_socket = ReceivingSocket}}.
 
 handle_cast({udp, _Socket, _IP, _InPortNo, Packet}, State) ->
@@ -50,8 +49,8 @@ handle_call(_Request, _From, State) ->
   Reply = ok,
   {reply, Reply, State}.
 
-handle_info(_Info, State) ->
-  utility:log("receiver: how about sending gen server a msg in a proper way"),
+handle_info(Info, State) ->
+  utility:log("receiver: how about sending gen server a msg in a proper way: ~p~n",[Info]),
   {noreply, State}.
 
 code_change(_OldVsn, State, _Extra) ->

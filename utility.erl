@@ -27,7 +27,7 @@ time_until_slot(Slot) ->
 
   % (?NUM_SLOTS - (CurrentSlot - Slot)): distance to desired slot in next frame (in number of slots)
   % <distance to desired slot> * <time of slot> - <already elapsed time> + <time to be in middle of slot>
-  (?NUM_SLOTS - (CurrentSlot - Slot)) * ?SLOT_TIME - ElapsedTime + ?SLOT_TIME div 2.
+  ((?NUM_SLOTS - (CurrentSlot - Slot)) * ?SLOT_TIME - ElapsedTime + ?SLOT_TIME div 2) - 1000.
 
 log(Message) ->
   LogMessage = lists:concat([werkzeug:timeMilliSecond(),

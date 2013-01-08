@@ -23,7 +23,7 @@
                 own_packet_collided}).
 
 easy_start() ->
-  start([1337, 08, 99, '127.0.0.1', '127.0.0.1']).
+  start([15100, 8, 99, '225.10.1.2', '141.22.27.102']).
 
 start([ReceivingPort, TeamNumber, StationNumber, MulticastIP, LocalIP]) ->
   SendingPort = 14000 + TeamNumber,
@@ -44,31 +44,39 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
   {ok, ParsedLocalIP} = inet_parse:address(atom_to_list(LocalIP)),
 
   %%% Open Multicast sockets
+
   {ok, ReceivingSocket} = gen_udp:open(ReceivingPort,
                                        [binary,
                                         {active, true},
                                         {multicast_if, ParsedLocalIP},
                                         inet,
-                                        {multicast_loop, false},
+					{reuseaddr, true}, % reuse open port on local machine
+                                        {multicast_loop, true},
                                         {add_membership, {ParsedMulticastIP,
                                                           ParsedLocalIP}}
                                        ]),
+  utility:log("receiving socket ~p~n",[inet:port(ReceivingSocket)]),
+  utility:log("multicast ip ~p~n",[ParsedMulticastIP]),
+  utility:log("local ip ~p~n",[ParsedLocalIP]),
   {ok, SendingSocket} = gen_udp:open(SendingPort,
                                      [binary,
                                       {active, true},
                                       {multicast_if, ParsedLocalIP},
                                       inet,
-                                      {multicast_loop, false},
-                                      {ip, ParsedLocalIP},
-                                      {reuseaddr, true} % reuse open port on local machine
+                                      {multicast_loop, true},
+                                      {ip, ParsedLocalIP}
                                      ]),
+  gen_udp:send(SendingSocket, ParsedMulticastIP, ReceivingPort, <<"111111111111111111111111111111111">>),
 
+  utility:log("sending socket ~p~n",[inet:port(SendingSocket)]),
   %%% start the receiver and sender processes
   {ok, ReceiverPID} = receiver:start(self(), ReceivingSocket),
   {ok, SenderPID}   =   sender:start(self(),
                                      SendingSocket,
                                      ParsedMulticastIP,
                                      ReceivingPort),
+  gen_udp:controlling_process(ReceivingSocket,ReceiverPID),
+  gen_udp:controlling_process(SendingSocket,SenderPID),
   %%% start timer for first sending round
   create_prepare_sending_timer(),
 									 
@@ -84,6 +92,7 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
 			 
 handle_cast(prepare_sending, State) ->
 	%start timer for next sending round
+	utility:log("lets start a new round"),
 	create_prepare_sending_timer(),
 	NewCurrentSlot = case State#state.own_packet_collided of
 		true ->
@@ -97,6 +106,7 @@ handle_cast(prepare_sending, State) ->
 
 %%% async incoming messages
 handle_cast({received, Slot, _Time, Packet}, State) ->
+  utility:log("received something"),
   NewSlotwishes = register_slotwishes(Packet, State#state.slot_wishes),
   case check_for_packet_collision(Slot, State) of
     true ->
@@ -140,6 +150,7 @@ handle_cast(kill, State) ->
 
 handle_cast(_UnknownMessage, State) ->
   % TODO log UnknownMessage
+	utility:log("unknown msg"),
   {noreply, State}.
 
 %%% do everything required for a clean shutdown
@@ -150,12 +161,15 @@ terminate(_Reason, State) ->
 
 %%%%% Helpers
 create_prepare_sending_timer() ->
+utility:log("creating timer"),
 	erlang:send_after(1000 - (utility:current_timestamp() rem 1000),self(),prepare_sending).
 
 get_random_slot() ->
+	utility:log("getting random slot"),
   random:uniform(20) - 1.
 
 calculate_free_slot(Slotwishes) ->
+	utility:log("calc free slot"),
   NonCollisionSlots = dict:filter(
     %%% Valid slots just have one sender.
     fun(_,V) ->
@@ -194,6 +208,10 @@ parse_message(Packet) ->
   >> = Packet,
   Payload = binary_to_list(PayloadBin),
   {StationNumber, Slot, Payload, Timestamp}.
+
+handle_info(prepare_sending, State) ->
+  gen_server:cast(self(), prepare_sending),
+  {noreply, State};
 
 %%% OTP gen_server boilerplate - ignore this
 handle_info(_Info, State) ->
