@@ -76,8 +76,7 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
                                       {multicast_loop, true},
                                       {ip, ParsedLocalIP}
                                      ]),
-  gen_udp:send(SendingSocket, ParsedMulticastIP, ReceivingPort, <<"111111111111111111111111111111111">>),
-
+									 
   utility:log("sending socket ~p~n",[inet:port(SendingSocket)]),
   %%% start the receiver and sender processes
   {ok, ReceiverPID} = receiver:start(self(), ReceivingSocket),
