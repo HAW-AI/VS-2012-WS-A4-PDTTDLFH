@@ -23,7 +23,7 @@
                 own_packet_collided}).
 
 easy_start() ->
-  start(['1337', '08', '99', '127.0.0.1', '127.0.0.1']).
+  start(['1337', '08', '99', '225.10.1.2', '127.0.0.1']).
 
 start([ReceivingPortAtom, TeamNumberAtom, StationNumberAtom, MulticastIPAtom, LocalIPAtom]) ->
   SendingPort = 14000 + atom_to_integer(TeamNumberAtom),
