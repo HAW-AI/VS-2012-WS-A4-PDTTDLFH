@@ -57,10 +57,18 @@ waiting_for_slot(Event, State) ->
 
 waiting_for_input({input, Data}, State) ->
   utility:log(io:format("waiting_for_input: {input, ~p}~n", [Data])),
-  AspiredSendingTime = utility:current_timestamp()+utility:time_until_slot(State#state.slot),
-  utility:log(io:format("should send: ~p~n", [AspiredSendingTime])),
-  gen_fsm:send_event_after(utility:time_until_slot(State#state.slot), revise_next_slot),
-  {next_state, revising_next_slot, State#state{data = Data, timestamp_aspired_sending=AspiredSendingTime}};
+  case Data == [] of
+	true ->
+		utility:log(io:format("waiting_for_input: data empty, waiting for next frame~n")),
+		{next_state, waiting_for_slot, State};
+	false ->
+	  AvgTimeDiff = min(average(State#state.sending_time_difference),0), %0 = no adjustment at all time
+	  AspiredSendingTime = utility:current_timestamp()+utility:time_until_slot(State#state.slot, AvgTimeDiff),
+	  utility:log(io:format("should send: ~p~n", [AspiredSendingTime])),
+	  gen_fsm:send_event_after(utility:time_until_slot(State#state.slot, AvgTimeDiff), revise_next_slot),
+	  {next_state, revising_next_slot, State#state{data = Data, timestamp_aspired_sending=AspiredSendingTime}}
+  end;
+
 waiting_for_input(Event, State) ->
   utility:log(io:format("waiting_for_input: unknown event: ~p~n", [Event])),
   {next_state, waiting_for_input, State}.

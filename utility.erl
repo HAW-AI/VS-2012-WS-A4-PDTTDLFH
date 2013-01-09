@@ -1,6 +1,6 @@
 -module(utility).
 -export([current_timestamp/0, current_frame/0, slot_of_timestamp/1,
-         time_until_slot/1, log/1, log/2]).
+         time_until_slot/2, log/1, log/2]).
 
 -define(NUM_SLOTS, 20).
 -define(SLOT_TIME, 50). % in milliseconds
@@ -20,14 +20,14 @@ slot_of_timestamp(Timestamp) ->
 	trunc(((Timestamp rem 1000) / ?SLOT_TIME)).
 
 % time in milliseconds until slot in _next_ frame
-time_until_slot(Slot) ->
+time_until_slot(Slot, Adjustment) ->
   CurrentTime = current_timestamp(),
   CurrentSlot = slot_of_timestamp(CurrentTime),
   ElapsedTime = CurrentTime rem ?SLOT_TIME,     % elapsed time since beginning of current slot
 
   % (?NUM_SLOTS - (CurrentSlot - Slot)): distance to desired slot in next frame (in number of slots)
   % <distance to desired slot> * <time of slot> - <already elapsed time> + <time to be in middle of slot>
-  ((?NUM_SLOTS - (CurrentSlot - Slot)) * ?SLOT_TIME - ElapsedTime + ?SLOT_TIME div 2) - 1000.
+  ((?NUM_SLOTS - (CurrentSlot - Slot)) * ?SLOT_TIME - ElapsedTime + ?SLOT_TIME div 2) - 1000 - Adjustment.
 
 log(Message) ->
   LogMessage = lists:concat([werkzeug:timeMilliSecond(),
