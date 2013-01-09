@@ -28,7 +28,7 @@ init([TeamNumber, StationNumber]) ->
              }}.
 
 handle_cast({write_data, StationIdentifier, StationNumber, Slot, _Payload, Timestamp, TimestampReceived}, State) ->
-  utility:log(lists:concat(["team",State#state.team_number,"-station",State#state.station_number]),"~p~p, TX: ~p, next slot: ~p, at ~p~n",[StationIdentifier, StationNumber, Timestamp, Slot, TimestampReceived]),
+  utility:log(lists:concat(["team",State#state.team_number,"-station",State#state.station_number]),"~s~p, TX: ~p, next slot: ~p, at ~p~n",[StationIdentifier, StationNumber, Timestamp, Slot, TimestampReceived]),
   {noreply, State};
 handle_cast(Any, State) ->
   utility:log(io_lib:format("received unknown msg: ~p~n",[Any])),

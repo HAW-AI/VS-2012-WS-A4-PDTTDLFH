@@ -31,7 +31,7 @@ handle_cast({input, Data}, State) ->
   {noreply, State#state{current_data=Data}};
 
 handle_cast({get_data, PID}, State) ->
-  utility:log(io_lib:format("data transfered to sender: ~p~n",[State#state.current_data])),
+  utility:log(io_lib:format("data transfered to sender: ~s~n",[State#state.current_data])),
   gen_fsm:send_event(PID,{input, State#state.current_data}),
   {noreply, State#state{current_data=[]}};
 
