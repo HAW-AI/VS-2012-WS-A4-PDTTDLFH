@@ -109,6 +109,7 @@ handle_cast(prepare_sending, State) ->
 	create_prepare_sending_timer(),
 	NewCurrentSlot = case State#state.own_packet_collided of
 		true ->
+		    utility:log("own packet collided - calculating new slot"),
 			calculate_free_slot(State#state.slot_wishes);
 		false ->
 			State#state.current_slot
@@ -123,9 +124,11 @@ handle_cast({received, Slot, TimestampReceived, Packet}, State) ->
   NewSlotwishes = register_slotwishes(Packet, State#state.slot_wishes),
   case check_for_packet_collision(Slot, State) of
     true ->
+	  utility:log("collision detected"),
       % check if the Slot of the packet is the same that we are sending in
       case Slot == State#state.current_slot of
         true ->
+		  utility:log("collision with own packet"),
           % Add slot to Slotwishes again so that it will be sorted out in the
           % next round when we are checking for a free slot
           SlotwishesWithCollision = dict:append(Slot,
