@@ -219,12 +219,13 @@ register_slotwishes(Packet, Slotwishes) ->
 %%% TODO handle malformed packets
 parse_message(Packet) ->
   <<StationIdentifierBin:8/binary,
-    StationNumber:16/integer-big,
+    StationNumberBin:2/binary,
     PayloadBin:14/binary,
     Slot:8/integer-big,
     Timestamp:64/integer-big
   >> = Packet,
   StationIdentifier = binary_to_list(StationIdentifierBin),
+  StationNumber = list_to_integer(binary_to_list(StationNumberBin)),
   Payload = binary_to_list(PayloadBin),
   {StationIdentifier, StationNumber, Slot, Payload, Timestamp}.
 
