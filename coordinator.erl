@@ -18,6 +18,7 @@
                 current_slot,
                 receiver_pid :: pid(),
                 sender_pid :: pid(),
+				datasink_pid :: pid(),
                 slot_wishes,
                 used_slots,
                 own_packet_collided}).
@@ -86,14 +87,17 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
                                      ReceivingPort),
   gen_udp:controlling_process(ReceivingSocket,ReceiverPID),
   gen_udp:controlling_process(SendingSocket,SenderPID),
+  
+  {ok, DataSinkPID} = datasink:start(TeamNumber, StationNumber),
+  
   %%% start timer for first sending round
   create_prepare_sending_timer(),
-
   {ok, #state{team_number         = TeamNumber,       %
               station_number      = StationNumber,    % HOSTNAME##lab
               current_slot        = get_random_slot(),% the slot we are trying to send in
               receiver_pid        = ReceiverPID,      % PID of the receiver gen_server
               sender_pid          = SenderPID,        % PID of the sender gen_server
+			  datasink_pid        = DataSinkPID,      % PID of the datasink gen_server
               slot_wishes         = dict:new(),       % [{SlotNumber,[Station1, Station2]}, ...]
               used_slots          = [],               % list of all slots in use. determined by seen packets
               own_packet_collided = false             %
@@ -114,7 +118,7 @@ handle_cast(prepare_sending, State) ->
 	{noreply, State#state{current_slot = NewCurrentSlot, slot_wishes = dict:new(), used_slots=[], own_packet_collided = false}};
 
 %%% async incoming messages
-handle_cast({received, Slot, _Time, Packet}, State) ->
+handle_cast({received, Slot, TimestampReceived, Packet}, State) ->
   utility:log("received something"),
   NewSlotwishes = register_slotwishes(Packet, State#state.slot_wishes),
   case check_for_packet_collision(Slot, State) of
@@ -135,6 +139,8 @@ handle_cast({received, Slot, _Time, Packet}, State) ->
                                 slot_wishes         = NewSlotwishes}}
       end;
     false -> % no collision at all
+      {StationIdentifier, StationNumber, NextSlot, Payload, Timestamp} = parse_message(Packet),
+      gen_server:cast(State#state.datasink_pid, {write_data, StationIdentifier, StationNumber, NextSlot, Payload, Timestamp, TimestampReceived}),
       UsedSlots = [Slot | State#state.used_slots],
       {noreply, State#state{slot_wishes = NewSlotwishes,
                             used_slots  = UsedSlots}}
@@ -207,19 +213,20 @@ check_for_packet_collision(Slot, State) ->
 %%% adds the slot a packet was sent in to the list of used slots
 -spec register_slotwishes(Packet :: binary(), Slotwishes :: dict()) -> dict().
 register_slotwishes(Packet, Slotwishes) ->
-  {StationNumber, Slot, _, _} = parse_message(Packet),
+  {_, StationNumber, Slot, _, _} = parse_message(Packet),
   dict:append(Slot, StationNumber, Slotwishes).
 
 %%% TODO handle malformed packets
 parse_message(Packet) ->
-  <<_StationIdentifier:8/binary,
+  <<StationIdentifierBin:8/binary,
     StationNumber:16/integer-big,
     PayloadBin:14/binary,
     Slot:8/integer-big,
     Timestamp:64/integer-big
   >> = Packet,
+  StationIdentifier = binary_to_list(StationIdentifierBin),
   Payload = binary_to_list(PayloadBin),
-  {StationNumber, Slot, Payload, Timestamp}.
+  {StationIdentifier, StationNumber, Slot, Payload, Timestamp}.
 
 handle_info(prepare_sending, State) ->
   gen_server:cast(self(), prepare_sending),
