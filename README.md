@@ -11,4 +11,5 @@
 ### Example
     java -cp ~/Downloads/datasource/ datasource.DataSource 6 99 | sh start.sh 1338 08 99 225.10.1.2 127.0.0.1
 
-
+## Logging
+The logs are written to the `log/` directory.
