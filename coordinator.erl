@@ -95,7 +95,6 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
   create_msg_timer(2000, first_frame),
   {ok, #state{team_number         = TeamNumber,       %
               station_number      = StationNumber,    % HOSTNAME##lab
-              current_slot        = get_random_slot(),% the slot we are trying to send in
               receiver_pid        = ReceiverPID,      % PID of the receiver gen_server
               sender_pid          = SenderPID,        % PID of the sender gen_server
 			  datasink_pid        = DataSinkPID,      % PID of the datasink gen_server
