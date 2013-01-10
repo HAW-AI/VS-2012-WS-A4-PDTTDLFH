@@ -92,7 +92,7 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
   {ok, DataSinkPID} = datasink:start(TeamNumber, StationNumber),
   
   %%% start timer for first sending round
-  create_prepare_sending_timer(),
+  create_msg_timer(2000, first_frame),
   {ok, #state{team_number         = TeamNumber,       %
               station_number      = StationNumber,    % HOSTNAME##lab
               current_slot        = get_random_slot(),% the slot we are trying to send in
@@ -104,10 +104,17 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
               own_packet_collided = false             %
              }}.
 
-handle_cast(prepare_sending, State) ->
+handle_cast(first_frame, State) ->
+	utility:log("lets start a new round"),
+	create_msg_timer(1000, new_frame),
+	FirstSlot = calculate_free_slot(State#state.slot_wishes),
+	gen_fsm:send_event(State#state.sender_pid, {slot, FirstSlot}),
+	{noreply, State#state{current_slot = FirstSlot, slot_wishes = dict:new(), used_slots=[], own_packet_collided = false}};
+
+handle_cast(new_frame, State) ->
 	%start timer for next sending round
 	utility:log("lets start a new round"),
-	create_prepare_sending_timer(),
+	create_msg_timer(1000, new_frame),
 	NewCurrentSlot = case State#state.own_packet_collided of
 		true ->
 		    utility:log("own packet collided - calculating new slot"),
@@ -182,9 +189,9 @@ terminate(_Reason, State) ->
 atom_to_integer(Atom) ->
   list_to_integer(atom_to_list(Atom)).
 
-create_prepare_sending_timer() ->
+create_msg_timer(Time, Msg) ->
 utility:log("creating timer"),
-	erlang:send_after(1000 - (utility:current_timestamp() rem 1000),self(),prepare_sending).
+	erlang:send_after(Time - (utility:current_timestamp() rem 1000),self(),Msg).
 
 get_random_slot() ->
 	utility:log("getting random slot"),
@@ -233,12 +240,17 @@ parse_message(Packet) ->
   Payload = binary_to_list(PayloadBin),
   {StationIdentifier, StationNumber, Slot, Payload, Timestamp}.
 
-handle_info(prepare_sending, State) ->
-  gen_server:cast(self(), prepare_sending),
+handle_info(first_frame, State) ->
+  gen_server:cast(self(), first_frame),
+  {noreply, State};  
+  
+handle_info(new_frame, State) ->
+  gen_server:cast(self(), new_frame),
   {noreply, State};
 
 %%% OTP gen_server boilerplate - ignore this
-handle_info(_Info, State) ->
+handle_info(Info, State) ->
+  utility:log("coordinator: how about sending gen server a msg in a proper way: ~p~n",[Info]),
   {noreply, State}.
 
 code_change(_OldVsn, State, _Extra) ->
