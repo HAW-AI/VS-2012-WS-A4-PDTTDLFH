@@ -104,8 +104,13 @@ send_message({next_slot, NextSlot}, State) ->
   SendingTimeDifferenceList = [SendingTimeDifference | State#state.sending_time_difference],
   AvarageDifference = average(SendingTimeDifferenceList),
   utility:log(io:format("sent ~p [Diff.: ~p Avg.: ~p]~n", [SentTime,SendingTimeDifference,AvarageDifference])),    
-
   {next_state, waiting_for_slot, State#state{timestamp_sending=SendingTime, timestamp_sent=SentTime, sending_time_difference=SendingTimeDifferenceList}};
+
+send_message(no_free_slot, State) ->
+  utility:log(io:format("send_message: no free slot. skipping this frame!")),
+  {next_state, waiting_for_slot, State};
+
+
 send_message(Event, State) ->
   utility:log(io:format("send_message: unknown event: ~p~n", [Event])),
   {next_state, send_message, State}.

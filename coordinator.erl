@@ -114,11 +114,19 @@ handle_cast(new_frame, State) ->
 	NewCurrentSlot = case State#state.own_packet_collided of
 		true ->
 		    utility:log("own packet collided - calculating new slot"),
-			calculate_free_slot(State#state.slot_wishes);
+			ASlot = case calculate_free_slot(State#state.slot_wishes) of
+				no_free_slot ->
+					utility:log(io:format("send_message: no free slot. skipping this frame!")),
+					State#state.current_slot;
+				Slot ->
+					gen_fsm:send_event(State#state.sender_pid, {slot, Slot}),
+					Slot
+			end,
+			ASlot;
 		false ->
+			gen_fsm:send_event(State#state.sender_pid, {slot, State#state.current_slot}),
 			State#state.current_slot
 	end,
-	gen_fsm:send_event(State#state.sender_pid, {slot, NewCurrentSlot}),
 	%resetting state for next round except for the new slot
 	{noreply, State#state{current_slot = NewCurrentSlot, slot_wishes = dict:new(), used_slots=[], own_packet_collided = false}};
 
@@ -158,9 +166,15 @@ handle_cast({revise_next_slot, CurrentNextSlot}, State) ->
 	case dict:is_key(CurrentNextSlot, State#state.slot_wishes) of
 		true -> %wish for slot, choose another
 			utility:log("coordinator: invalid - calculating new slot"),
-			NewNextSlot = calculate_free_slot(State#state.slot_wishes),
-			gen_fsm:send_event(State#state.sender_pid, {next_slot, NewNextSlot}),
-			{noreply, State#state{current_slot = NewNextSlot}};
+			NextSlot = case calculate_free_slot(State#state.slot_wishes) of
+              no_free_slot ->
+			    gen_fsm:send_event(State#state.sender_pid, no_free_slot),
+				CurrentNextSlot;
+              Slot ->
+			    gen_fsm:send_event(State#state.sender_pid, {next_slot, Slot}),
+				Slot
+			end,
+            {noreply, State#state{current_slot = NextSlot}};
 		false -> %still free, keep it
 			utility:log("coordinator: valid - just go on"),
 			gen_fsm:send_event(State#state.sender_pid, {next_slot, CurrentNextSlot}),
@@ -189,10 +203,6 @@ create_msg_timer(Time, Msg) ->
 utility:log("creating timer"),
 	erlang:send_after(Time - (utility:current_timestamp() rem 1000),self(),Msg).
 
-get_random_slot() ->
-	utility:log("getting random slot"),
-  random:uniform(20) - 1.
-
 calculate_free_slot(Slotwishes) ->
 	utility:log("calc free slot"),
   NonCollisionSlots = dict:filter(
@@ -206,7 +216,7 @@ calculate_free_slot(Slotwishes) ->
                                   dict:fetch_keys(NonCollisionSlots)),
   case length(AvailableSlots) == 0 of
 	true ->
-	  get_random_slot();
+	  no_free_slot;
 	false ->
 	  RandomElementIndex = random:uniform(length(AvailableSlots)),
 	  lists:nth(RandomElementIndex, AvailableSlots)
