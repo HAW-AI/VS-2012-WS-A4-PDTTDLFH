@@ -25,11 +25,11 @@
                 coordinator_pid :: pid(),% PID of the coordinator gen_server
                 slot,                    % slot of each frame used for sending
                 data,                     % data to broadcast
-				timestamp_aspired_sending,
-				timestamp_revising,
-				timestamp_sending,
-				timestamp_sent,
-				sending_time_difference = []
+        timestamp_aspired_sending,
+        timestamp_revising,
+        timestamp_sending,
+        timestamp_sent,
+        sending_time_difference = []
                }).
 
 start(CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort) ->
@@ -58,15 +58,22 @@ waiting_for_slot(Event, State) ->
 waiting_for_input({input, Data}, State) ->
   utility:log(io:format("waiting_for_input: {input, ~p}~n", [Data])),
   case Data == [] of
-	true ->
-		utility:log(io:format("waiting_for_input: data empty, waiting for next frame~n")),
-		{next_state, waiting_for_slot, State};
-	false ->
-	  AvgTimeDiff = min(average(State#state.sending_time_difference),0), %0 = no adjustment at all time
-	  AspiredSendingTime = utility:current_timestamp()+utility:time_until_slot(State#state.slot, AvgTimeDiff),
-	  utility:log(io:format("should send: ~p~n", [AspiredSendingTime])),
-	  gen_fsm:send_event_after(utility:time_until_slot(State#state.slot, AvgTimeDiff), revise_next_slot),
-	  {next_state, revising_next_slot, State#state{data = Data, timestamp_aspired_sending=AspiredSendingTime}}
+    true ->
+      utility:log(io:format("waiting_for_input: data empty, waiting for next frame~n")),
+      {next_state, waiting_for_slot, State};
+    false ->
+      AvgTimeDiff = min(average(State#state.sending_time_difference),0), %0 = no adjustment at all time
+      AspiredSendingTime = utility:current_timestamp()+utility:time_until_slot(State#state.slot, AvgTimeDiff),
+      utility:log(io:format("should send: ~p~n", [AspiredSendingTime])),
+      Time = utility:time_until_slot(State#state.slot, AvgTimeDiff),
+      case Time > 0 of
+        true ->
+          gen_fsm:send_event_after(Time, revise_next_slot);
+        _ ->
+          gen_fsm:send_event(self(), revise_next_slot)
+      end,
+
+      {next_state, revising_next_slot, State#state{data = Data, timestamp_aspired_sending=AspiredSendingTime}}
   end;
 
 waiting_for_input(Event, State) ->
@@ -96,7 +103,7 @@ send_message({next_slot, NextSlot}, State) ->
   SendingTimeDifference = SentTime - State#state.timestamp_aspired_sending,
   SendingTimeDifferenceList = [SendingTimeDifference | State#state.sending_time_difference],
   AvarageDifference = average(SendingTimeDifferenceList),
-  utility:log(io:format("sent ~p [Diff.: ~p Avg.: ~p]~n", [SentTime,SendingTimeDifference,AvarageDifference])),		 
+  utility:log(io:format("sent ~p [Diff.: ~p Avg.: ~p]~n", [SentTime,SendingTimeDifference,AvarageDifference])),    
 
   {next_state, waiting_for_slot, State#state{timestamp_sending=SendingTime, timestamp_sent=SentTime, sending_time_difference=SendingTimeDifferenceList}};
 send_message(Event, State) ->
