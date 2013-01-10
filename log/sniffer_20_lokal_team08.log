@@ -1,0 +1,872 @@
+Time adaption is on.
+
+Listening on port 1337 (eth2, 172.16.1.13), joined 225.10.1.2
+   ========= Frame: 1357815206  ==================
+ 1357815206115 (slot  2): received 'team 08-12' next slot:  1 TX: 1357815206116 (-1 / 0)
+ 1357815206146 (slot  2): received 'team 08-08' next slot:  1 TX: 1357815206148 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815206181 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815206183 (-2 / 0)
+ 1357815206363 (slot  7): received 'team 08-00' next slot:  5 TX: 1357815206365 (-2 / 0)
+ 1357815206578 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815206579 (-1 / 0)
+ 1357815206584 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815206586 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815206625 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815206627 (-2 / 0)
+ 1357815206626 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815206628 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815206728 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815206730 (-2 / 0)
+ 1357815206756 (slot 15): received 'team 08-10' next slot: 13 TX: 1357815206758 (-2 / 0)
+ 1357815206877 (slot 17): received 'team 08-09' next slot: 17 TX: 1357815206878 (-1 / 1)
+ 1357815206928 (slot 18): received 'team 08-07' next slot: 17 TX: 1357815206929 (-1 / 1)
+ 1357815206978 (slot 19): received 'team 08-03' next slot: 19 TX: 1357815206979 (-1 / 1)
+   ========= Frame: 1357815207  ==================
+ 1357815207077 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815207078 (-1 / 1)
+ 1357815207078 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815207079 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815207178 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815207178 (0 / 1)
+ 1357815207178 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815207179 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815207278 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815207279 (-1 / 1)
+ 1357815207330 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815207331 (-1 / 1)
+ 1357815207379 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815207379 (0 / 1)
+ 1357815207492 (slot  9): received 'team 08-14' next slot:  9 TX: 1357815207492 (0 / 1)
+ 1357815207578 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815207579 (-1 / 1)
+ 1357815207579 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815207580 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815207630 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815207631 (-1 / 1)
+ 1357815207631 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815207632 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815207662 (slot 13): received 'team 08-16' next slot: 12 TX: 1357815207662 (0 / 1)
+ 1357815207677 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815207678 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815207728 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815207729 (-1 / 1)
+ 1357815207786 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815207787 (-1 / 1)
+ 1357815207895 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815207896 (-1 / 1)
+ 1357815207896 (slot 17): received 'team 08-07' next slot: 17 TX: 1357815207897 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815207929 (slot 18): received 'team 08-09' next slot: 17 TX: 1357815207929 (0 / 1)
+ 1357815207978 (slot 19): received 'team 08-03' next slot: 19 TX: 1357815207979 (-1 / 1)
+   ========= Frame: 1357815208  ==================
+ 1357815208076 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815208076 (0 / 1)
+ 1357815208076 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815208077 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815208175 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815208176 (-1 / 1)
+ 1357815208175 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815208176 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815208330 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815208331 (-1 / 1)
+ 1357815208378 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815208379 (-1 / 1)
+ 1357815208411 (slot  8): received 'team 08-00' next slot:  5 TX: 1357815208412 (-1 / 1)
+ 1357815208573 (slot 11): received 'team 08-14' next slot:  9 TX: 1357815208574 (-1 / 1)
+ 1357815208578 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815208578 (0 / 1)
+    >>>> collides with previous packet 
+ 1357815208578 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815208579 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815208644 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815208645 (-1 / 1)
+ 1357815208697 (slot 13): received 'team 08-16' next slot: 12 TX: 1357815208698 (-1 / 1)
+ 1357815208717 (slot 14): received 'team 08-05' next slot: 12 TX: 1357815208717 (0 / 1)
+ 1357815208775 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815208776 (-1 / 1)
+ 1357815208779 (slot 15): received 'team 08-10' next slot: 13 TX: 1357815208780 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815208816 (slot 16): received 'team 08-13' next slot: 14 TX: 1357815208803 (13 / 1)
+ 1357815208875 (slot 17): received 'team 08-07' next slot: 17 TX: 1357815208876 (-1 / 1)
+ 1357815208876 (slot 17): received 'team 08-09' next slot: 17 TX: 1357815208877 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815208876 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815208877 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815208988 (slot 19): received 'team 08-03' next slot: 19 TX: 1357815208989 (-1 / 1)
+   ========= Frame: 1357815209  ==================
+ 1357815209078 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815209079 (-1 / 1)
+ 1357815209127 (slot  2): received 'team 08-12' next slot:  1 TX: 1357815209128 (-1 / 1)
+ 1357815209200 (slot  4): received 'team 08-11' next slot:  3 TX: 1357815209201 (-1 / 1)
+ 1357815209201 (slot  4): received 'team 08-06' next slot:  3 TX: 1357815209202 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815209382 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815209383 (-1 / 1)
+ 1357815209422 (slot  8): received 'team 08-00' next slot:  5 TX: 1357815209404 (18 / 0)
+ 1357815209493 (slot  9): received 'team 08-18' next slot:  6 TX: 1357815209461 (32 / -1)
+ 1357815209506 (slot 10): received 'team 08-14' next slot:  9 TX: 1357815209509 (-3 / -1)
+ 1357815209623 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815209626 (-3 / -1)
+ 1357815209624 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815209626 (-2 / -1)
+    >>>> collides with previous packet 
+ 1357815209624 (slot 12): received 'team 08-16' next slot: 12 TX: 1357815209627 (-3 / -1)
+    >>>> collides with previous packet 
+ 1357815209653 (slot 13): received 'team 08-02' next slot: 11 TX: 1357815209656 (-3 / -1)
+ 1357815209653 (slot 13): received 'team 08-04' next slot: 11 TX: 1357815209628 (25 / -3)
+    >>>> collides with previous packet 
+ 1357815209735 (slot 14): received 'team 08-10' next slot: 13 TX: 1357815209740 (-5 / -3)
+ 1357815209837 (slot 16): received 'team 08-13' next slot: 14 TX: 1357815209842 (-5 / -3)
+ 1357815209875 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815209879 (-4 / -2)
+ 1357815209876 (slot 17): received 'team 08-07' next slot: 17 TX: 1357815209880 (-4 / -2)
+    >>>> collides with previous packet 
+ 1357815209888 (slot 17): received 'team 08-15' next slot: 15 TX: 1357815209891 (-3 / -2)
+    >>>> collides with previous packet 
+ 1357815209957 (slot 19): received 'team 08-09' next slot: 17 TX: 1357815209960 (-3 / -2)
+ 1357815209975 (slot 19): received 'team 08-03' next slot: 19 TX: 1357815209979 (-4 / -2)
+    >>>> collides with previous packet 
+   ========= Frame: 1357815210  ==================
+ 1357815210073 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815210077 (-4 / -2)
+ 1357815210172 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815210176 (-4 / -2)
+ 1357815210173 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815210177 (-4 / -2)
+    >>>> collides with previous packet 
+ 1357815210176 (slot  3): received 'team 08-08' next slot:  1 TX: 1357815210178 (-2 / -2)
+    >>>> collides with previous packet 
+ 1357815210279 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815210283 (-4 / -2)
+ 1357815210324 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815210327 (-3 / -1)
+ 1357815210505 (slot 10): received 'team 08-19' next slot:  7 TX: 1357815210470 (35 / -1)
+ 1357815210509 (slot 10): received 'team 08-14' next slot:  9 TX: 1357815210511 (-2 / -1)
+    >>>> collides with previous packet 
+ 1357815210585 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815210588 (-3 / -1)
+ 1357815210624 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815210627 (-3 / -1)
+ 1357815210633 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815210636 (-3 / -1)
+    >>>> collides with previous packet 
+ 1357815210681 (slot 13): received 'team 08-04' next slot: 11 TX: 1357815210646 (35 / -3)
+ 1357815210697 (slot 13): received 'team 08-16' next slot: 12 TX: 1357815210660 (37 / -4)
+    >>>> collides with previous packet 
+ 1357815210729 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815210735 (-6 / -4)
+ 1357815210736 (slot 14): received 'team 08-10' next slot: 13 TX: 1357815210742 (-6 / -4)
+    >>>> collides with previous packet 
+ 1357815210782 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815210788 (-6 / -4)
+ 1357815210871 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815210877 (-6 / -4)
+ 1357815210877 (slot 17): received 'team 08-07' next slot: 17 TX: 1357815210883 (-6 / -4)
+    >>>> collides with previous packet 
+ 1357815210930 (slot 18): received 'team 08-09' next slot: 17 TX: 1357815210935 (-5 / -4)
+   ========= Frame: 1357815211  ==================
+ 1357815211026 (slot  0): received 'team 08-03' next slot: 19 TX: 1357815211032 (-6 / -4)
+ 1357815211077 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815211083 (-6 / -4)
+ 1357815211158 (slot  3): received 'team 08-08' next slot:  1 TX: 1357815211134 (24 / -5)
+ 1357815211189 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815211196 (-7 / -5)
+    >>>> collides with previous packet 
+ 1357815211195 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815211202 (-7 / -5)
+    >>>> collides with previous packet 
+ 1357815211314 (slot  6): received 'team 08-00' next slot:  5 TX: 1357815211321 (-7 / -5)
+ 1357815211319 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815211326 (-7 / -5)
+    >>>> collides with previous packet 
+ 1357815211472 (slot  9): received 'team 08-19' next slot:  7 TX: 1357815211450 (22 / -5)
+ 1357815211530 (slot 10): received 'team 08-14' next slot:  9 TX: 1357815211537 (-7 / -5)
+ 1357815211573 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815211580 (-7 / -5)
+ 1357815211646 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815211653 (-7 / -5)
+ 1357815211649 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815211656 (-7 / -5)
+    >>>> collides with previous packet 
+ 1357815211658 (slot 13): received 'team 08-02' next slot: 11 TX: 1357815211663 (-5 / -3)
+ 1357815211676 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815211679 (-3 / -1)
+    >>>> collides with previous packet 
+ 1357815211689 (slot 13): received 'team 08-16' next slot: 12 TX: 1357815211676 (13 / -1)
+    >>>> collides with previous packet 
+ 1357815211726 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815211729 (-3 / -1)
+ 1357815211870 (slot 17): received 'team 08-15' next slot: 15 TX: 1357815211872 (-2 / -1)
+ 1357815211873 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815211876 (-3 / -1)
+    >>>> collides with previous packet 
+ 1357815211968 (slot 19): received 'team 08-09' next slot: 17 TX: 1357815211971 (-3 / -1)
+ 1357815211976 (slot 19): received 'team 08-03' next slot: 19 TX: 1357815211979 (-3 / -1)
+    >>>> collides with previous packet 
+ 1357815211992 (slot 19): received 'team 08-07' next slot: 17 TX: 1357815211995 (-3 / -1)
+    >>>> collides with previous packet 
+   ========= Frame: 1357815212  ==================
+ 1357815212074 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815212077 (-3 / -1)
+ 1357815212077 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815212079 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815212177 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815212179 (-2 / 0)
+ 1357815212178 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815212180 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815212281 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815212283 (-2 / 0)
+ 1357815212328 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815212330 (-2 / 0)
+ 1357815212396 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815212397 (-1 / 1)
+ 1357815212477 (slot  9): received 'team 08-14' next slot:  9 TX: 1357815212478 (-1 / 1)
+ 1357815212580 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815212581 (-1 / 1)
+ 1357815212626 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815212627 (-1 / 1)
+ 1357815212627 (slot 12): received 'team 08-16' next slot: 12 TX: 1357815212628 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815212643 (slot 12): received 'team 08-04' next slot: 11 TX: 1357815212616 (27 / 0)
+    >>>> collides with previous packet 
+ 1357815212679 (slot 13): received 'team 08-01' next slot: 12 TX: 1357815212681 (-2 / 0)
+ 1357815212681 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815212683 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815212728 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815212730 (-2 / 0)
+ 1357815212777 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815212779 (-2 / 0)
+ 1357815212876 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815212878 (-2 / 0)
+ 1357815212877 (slot 17): received 'team 08-09' next slot: 17 TX: 1357815212879 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815212954 (slot 19): received 'team 08-07' next slot: 17 TX: 1357815212956 (-2 / 0)
+ 1357815212977 (slot 19): received 'team 08-03' next slot: 19 TX: 1357815212979 (-2 / 0)
+    >>>> collides with previous packet 
+   ========= Frame: 1357815213  ==================
+ 1357815213077 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815213078 (-1 / 0)
+ 1357815213078 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815213079 (-1 / 0)
+    >>>> collides with previous packet 
+ 1357815213176 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815213178 (-2 / 0)
+ 1357815213262 (slot  5): received 'team 08-06' next slot:  3 TX: 1357815213264 (-2 / 0)
+ 1357815213279 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815213281 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815213326 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815213328 (-2 / 0)
+ 1357815213377 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815213379 (-2 / 0)
+ 1357815213504 (slot 10): received 'team 08-14' next slot:  9 TX: 1357815213506 (-2 / 0)
+ 1357815213577 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815213579 (-2 / 0)
+ 1357815213579 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815213580 (-1 / 0)
+    >>>> collides with previous packet 
+ 1357815213629 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815213631 (-2 / 0)
+ 1357815213631 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815213632 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815213678 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815213679 (-1 / 1)
+ 1357815213778 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815213779 (-1 / 1)
+ 1357815213878 (slot 17): received 'team 08-07' next slot: 17 TX: 1357815213879 (-1 / 1)
+ 1357815213879 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815213880 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815213885 (slot 17): received 'team 08-13' next slot: 14 TX: 1357815213886 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815213931 (slot 18): received 'team 08-16' next slot: 12 TX: 1357815213932 (-1 / 1)
+ 1357815213978 (slot 19): received 'team 08-03' next slot: 19 TX: 1357815213979 (-1 / 1)
+   ========= Frame: 1357815214  ==================
+ 1357815214021 (slot  0): received 'team 08-09' next slot: 17 TX: 1357815214022 (-1 / 1)
+ 1357815214078 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815214079 (-1 / 1)
+ 1357815214080 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815214080 (0 / 1)
+    >>>> collides with previous packet 
+ 1357815214178 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815214179 (-1 / 1)
+ 1357815214182 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815214183 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815214278 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815214279 (-1 / 1)
+ 1357815214329 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815214330 (-1 / 1)
+ 1357815214378 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815214379 (-1 / 1)
+ 1357815214578 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815214579 (-1 / 1)
+ 1357815214588 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815214589 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815214629 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815214630 (-1 / 1)
+ 1357815214630 (slot 12): received 'team 08-16' next slot: 12 TX: 1357815214631 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815214636 (slot 12): received 'team 08-14' next slot:  9 TX: 1357815214636 (0 / 1)
+    >>>> collides with previous packet 
+ 1357815214676 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815214677 (-1 / 1)
+ 1357815214693 (slot 13): received 'team 08-01' next slot: 12 TX: 1357815214694 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815214730 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815214731 (-1 / 1)
+ 1357815214778 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815214778 (0 / 1)
+ 1357815214877 (slot 17): received 'team 08-09' next slot: 17 TX: 1357815214878 (-1 / 1)
+ 1357815214878 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815214879 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815214954 (slot 19): received 'team 08-07' next slot: 17 TX: 1357815214955 (-1 / 1)
+ 1357815214978 (slot 19): received 'team 08-03' next slot: 19 TX: 1357815214978 (0 / 1)
+    >>>> collides with previous packet 
+   ========= Frame: 1357815215  ==================
+ 1357815215077 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815215078 (-1 / 1)
+ 1357815215078 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815215078 (0 / 1)
+    >>>> collides with previous packet 
+ 1357815215179 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815215180 (-1 / 1)
+ 1357815215180 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815215181 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815215330 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815215331 (-1 / 1)
+ 1357815215379 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815215380 (-1 / 1)
+ 1357815215414 (slot  8): received 'team 08-00' next slot:  5 TX: 1357815215415 (-1 / 1)
+ 1357815215478 (slot  9): received 'team 08-14' next slot:  9 TX: 1357815215479 (-1 / 1)
+ 1357815215578 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815215578 (0 / 1)
+ 1357815215629 (slot 12): received 'team 08-16' next slot: 12 TX: 1357815215630 (-1 / 1)
+ 1357815215631 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815215632 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815215688 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815215689 (-1 / 1)
+ 1357815215737 (slot 14): received 'team 08-02' next slot: 11 TX: 1357815215738 (-1 / 1)
+ 1357815215738 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815215739 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815215756 (slot 15): received 'team 08-05' next slot: 12 TX: 1357815215757 (-1 / 1)
+ 1357815215848 (slot 16): received 'team 08-15' next slot: 15 TX: 1357815215849 (-1 / 1)
+ 1357815215879 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815215879 (0 / 1)
+ 1357815215978 (slot 19): received 'team 08-03' next slot: 19 TX: 1357815215979 (-1 / 1)
+   ========= Frame: 1357815216  ==================
+ 1357815216015 (slot  0): received 'team 08-09' next slot: 17 TX: 1357815215967 (48 / 0)
+ 1357815216027 (slot  0): received 'team 08-07' next slot: 17 TX: 1357815216029 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815216077 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815216079 (-2 / 0)
+ 1357815216077 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815216079 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815216188 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815216190 (-2 / 0)
+ 1357815216292 (slot  5): received 'team 08-11' next slot:  3 TX: 1357815216294 (-2 / 0)
+ 1357815216301 (slot  6): received 'team 08-00' next slot:  5 TX: 1357815216303 (-2 / 0)
+ 1357815216328 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815216330 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815216377 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815216379 (-2 / 0)
+ 1357815216481 (slot  9): received 'team 08-14' next slot:  9 TX: 1357815216483 (-2 / 0)
+ 1357815216577 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815216579 (-2 / 0)
+ 1357815216578 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815216580 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815216626 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815216628 (-2 / 0)
+ 1357815216703 (slot 14): received 'team 08-05' next slot: 12 TX: 1357815216704 (-1 / 0)
+ 1357815216706 (slot 14): received 'team 08-16' next slot: 12 TX: 1357815216678 (28 / -2)
+    >>>> collides with previous packet 
+ 1357815216727 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815216730 (-3 / -2)
+    >>>> collides with previous packet 
+ 1357815216756 (slot 15): received 'team 08-10' next slot: 13 TX: 1357815216760 (-4 / -2)
+ 1357815216776 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815216780 (-4 / -2)
+    >>>> collides with previous packet 
+ 1357815216874 (slot 17): received 'team 08-07' next slot: 17 TX: 1357815216878 (-4 / -2)
+   ========= Frame: 1357815217  ==================
+ 1357815217022 (slot  0): received 'team 08-09' next slot: 17 TX: 1357815217026 (-4 / -2)
+ 1357815217027 (slot  0): received 'team 08-17' next slot: 17 TX: 1357815217029 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815217075 (slot  1): received 'team 08-03' next slot: 19 TX: 1357815217077 (-2 / 0)
+ 1357815217076 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815217078 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815217076 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815217078 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815217177 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815217178 (-1 / 0)
+ 1357815217177 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815217178 (-1 / 0)
+    >>>> collides with previous packet 
+ 1357815217327 (slot  6): received 'team 08-00' next slot:  5 TX: 1357815217328 (-1 / 0)
+ 1357815217329 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815217331 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815217377 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815217379 (-2 / 0)
+ 1357815217478 (slot  9): received 'team 08-14' next slot:  9 TX: 1357815217480 (-2 / 0)
+ 1357815217577 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815217578 (-1 / 0)
+ 1357815217577 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815217578 (-1 / 0)
+    >>>> collides with previous packet 
+ 1357815217625 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815217627 (-2 / 0)
+ 1357815217626 (slot 12): received 'team 08-16' next slot: 12 TX: 1357815217628 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815217628 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815217629 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815217683 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815217684 (-1 / 1)
+ 1357815217727 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815217728 (-1 / 1)
+ 1357815217785 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815217786 (-1 / 1)
+ 1357815217877 (slot 17): received 'team 08-07' next slot: 17 TX: 1357815217878 (-1 / 1)
+   ========= Frame: 1357815218  ==================
+ 1357815218078 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815218079 (-1 / 1)
+ 1357815218079 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815218080 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815218175 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815218176 (-1 / 1)
+ 1357815218218 (slot  4): received 'team 08-06' next slot:  3 TX: 1357815218219 (-1 / 1)
+ 1357815218283 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815218284 (-1 / 1)
+ 1357815218330 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815218331 (-1 / 1)
+ 1357815218378 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815218379 (-1 / 1)
+ 1357815218475 (slot  9): received 'team 08-14' next slot:  9 TX: 1357815218476 (-1 / 1)
+ 1357815218578 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815218579 (-1 / 1)
+ 1357815218630 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815218631 (-1 / 1)
+ 1357815218659 (slot 13): received 'team 08-02' next slot: 11 TX: 1357815218660 (-1 / 1)
+ 1357815218736 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815218737 (-1 / 1)
+ 1357815218741 (slot 14): received 'team 08-10' next slot: 13 TX: 1357815218741 (0 / 2)
+    >>>> collides with previous packet 
+ 1357815218744 (slot 14): received 'team 08-05' next slot: 12 TX: 1357815218744 (0 / 2)
+    >>>> collides with previous packet 
+ 1357815218748 (slot 14): received 'team 08-16' next slot: 12 TX: 1357815218733 (15 / 1)
+    >>>> collides with previous packet 
+ 1357815218778 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815218779 (-1 / 1)
+ 1357815218878 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815218879 (-1 / 1)
+ 1357815218879 (slot 17): received 'team 08-09' next slot: 17 TX: 1357815218880 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815218949 (slot 18): received 'team 08-07' next slot: 17 TX: 1357815218948 (1 / 1)
+ 1357815218993 (slot 19): received 'team 08-03' next slot: 19 TX: 1357815218994 (-1 / 1)
+   ========= Frame: 1357815219  ==================
+ 1357815219077 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815219078 (-1 / 1)
+ 1357815219078 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815219079 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815219178 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815219179 (-1 / 1)
+ 1357815219178 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815219179 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815219277 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815219278 (-1 / 1)
+ 1357815219326 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815219327 (-1 / 1)
+ 1357815219378 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815219379 (-1 / 1)
+ 1357815219559 (slot 11): received 'team 08-14' next slot:  9 TX: 1357815219535 (24 / 0)
+ 1357815219576 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815219578 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815219592 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815219594 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815219628 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815219630 (-2 / 0)
+ 1357815219629 (slot 12): received 'team 08-16' next slot: 12 TX: 1357815219631 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815219650 (slot 13): received 'team 08-05' next slot: 12 TX: 1357815219652 (-2 / 0)
+ 1357815219742 (slot 14): received 'team 08-10' next slot: 13 TX: 1357815219744 (-2 / 0)
+ 1357815219777 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815219779 (-2 / 0)
+ 1357815219796 (slot 15): received 'team 08-13' next slot: 14 TX: 1357815219796 (0 / 0)
+    >>>> collides with previous packet 
+ 1357815219874 (slot 17): received 'team 08-07' next slot: 17 TX: 1357815219876 (-2 / 0)
+ 1357815219875 (slot 17): received 'team 08-09' next slot: 17 TX: 1357815219877 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815219957 (slot 19): received 'team 08-17' next slot: 17 TX: 1357815219936 (21 / 0)
+   ========= Frame: 1357815220  ==================
+ 1357815220060 (slot  1): received 'team 08-03' next slot: 19 TX: 1357815220062 (-2 / 0)
+ 1357815220077 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815220079 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815220086 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815220088 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815220177 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815220179 (-2 / 0)
+ 1357815220179 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815220181 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815220282 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815220284 (-2 / 0)
+ 1357815220382 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815220384 (-2 / 0)
+ 1357815220447 (slot  8): received 'team 08-18' next slot:  6 TX: 1357815220423 (24 / -1)
+ 1357815220541 (slot 10): received 'team 08-14' next slot:  9 TX: 1357815220543 (-2 / 0)
+ 1357815220574 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815220576 (-2 / 0)
+ 1357815220575 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815220577 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815220629 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815220631 (-2 / 0)
+ 1357815220696 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815220698 (-2 / 0)
+ 1357815220701 (slot 14): received 'team 08-16' next slot: 12 TX: 1357815220702 (-1 / 0)
+ 1357815220748 (slot 14): received 'team 08-01' next slot: 12 TX: 1357815220750 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815220776 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815220778 (-2 / 0)
+ 1357815220787 (slot 15): received 'team 08-13' next slot: 14 TX: 1357815220789 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815220876 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815220878 (-2 / 0)
+ 1357815220970 (slot 19): received 'team 08-09' next slot: 17 TX: 1357815220972 (-2 / 0)
+ 1357815220974 (slot 19): received 'team 08-07' next slot: 17 TX: 1357815220976 (-2 / 0)
+    >>>> collides with previous packet 
+   ========= Frame: 1357815221  ==================
+ 1357815221053 (slot  1): received 'team 08-03' next slot: 19 TX: 1357815221055 (-2 / 0)
+ 1357815221092 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815221094 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815221096 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815221098 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815221191 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815221193 (-2 / 0)
+ 1357815221220 (slot  4): received 'team 08-11' next slot:  3 TX: 1357815221221 (-1 / 0)
+ 1357815221280 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815221282 (-2 / 0)
+ 1357815221335 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815221337 (-2 / 0)
+ 1357815221477 (slot  9): received 'team 08-14' next slot:  9 TX: 1357815221478 (-1 / 1)
+ 1357815221531 (slot 10): received 'team 08-19' next slot:  7 TX: 1357815221501 (30 / 0)
+ 1357815221576 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815221578 (-2 / 0)
+ 1357815221596 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815221598 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815221624 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815221626 (-2 / 0)
+ 1357815221669 (slot 13): received 'team 08-01' next slot: 12 TX: 1357815221671 (-2 / 0)
+ 1357815221684 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815221686 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815221738 (slot 14): received 'team 08-16' next slot: 12 TX: 1357815221740 (-2 / 0)
+ 1357815221740 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815221741 (-1 / 0)
+    >>>> collides with previous packet 
+ 1357815221781 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815221783 (-2 / 0)
+ 1357815221877 (slot 17): received 'team 08-07' next slot: 17 TX: 1357815221879 (-2 / 0)
+ 1357815221993 (slot 19): received 'team 08-09' next slot: 17 TX: 1357815221969 (24 / -1)
+   ========= Frame: 1357815222  ==================
+ 1357815222010 (slot  0): received 'team 08-17' next slot: 17 TX: 1357815221991 (19 / -2)
+ 1357815222075 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815222079 (-4 / -2)
+ 1357815222076 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815222080 (-4 / -2)
+    >>>> collides with previous packet 
+ 1357815222172 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815222176 (-4 / -2)
+ 1357815222173 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815222177 (-4 / -2)
+    >>>> collides with previous packet 
+ 1357815222349 (slot  6): received 'team 08-00' next slot:  5 TX: 1357815222353 (-4 / -2)
+ 1357815222374 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815222378 (-4 / -2)
+ 1357815222426 (slot  8): received 'team 08-18' next slot:  6 TX: 1357815222429 (-3 / -2)
+ 1357815222475 (slot  9): received 'team 08-14' next slot:  9 TX: 1357815222479 (-4 / -2)
+ 1357815222577 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815222579 (-2 / 0)
+ 1357815222578 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815222580 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815222626 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815222628 (-2 / 0)
+ 1357815222628 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815222629 (-1 / 0)
+    >>>> collides with previous packet 
+ 1357815222628 (slot 12): received 'team 08-16' next slot: 12 TX: 1357815222629 (-1 / 0)
+    >>>> collides with previous packet 
+ 1357815222681 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815222683 (-2 / 0)
+ 1357815222725 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815222727 (-2 / 0)
+ 1357815222781 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815222783 (-2 / 0)
+ 1357815222881 (slot 17): received 'team 08-07' next slot: 17 TX: 1357815222882 (-1 / 0)
+ 1357815222886 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815222888 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815222988 (slot 19): received 'team 08-09' next slot: 17 TX: 1357815222989 (-1 / 0)
+   ========= Frame: 1357815223  ==================
+ 1357815223060 (slot  1): received 'team 08-03' next slot: 19 TX: 1357815223061 (-1 / 1)
+ 1357815223077 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815223078 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815223078 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815223079 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815223187 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815223187 (0 / 1)
+ 1357815223187 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815223188 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815223278 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815223279 (-1 / 1)
+ 1357815223325 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815223326 (-1 / 1)
+ 1357815223385 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815223386 (-1 / 1)
+ 1357815223482 (slot  9): received 'team 08-14' next slot:  9 TX: 1357815223483 (-1 / 1)
+ 1357815223579 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815223580 (-1 / 1)
+ 1357815223630 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815223631 (-1 / 1)
+ 1357815223639 (slot 12): received 'team 08-02' next slot: 11 TX: 1357815223640 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815223642 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815223643 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815223678 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815223679 (-1 / 1)
+ 1357815223720 (slot 14): received 'team 08-16' next slot: 12 TX: 1357815223721 (-1 / 1)
+ 1357815223781 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815223782 (-1 / 1)
+ 1357815223797 (slot 15): received 'team 08-13' next slot: 14 TX: 1357815223798 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815223875 (slot 17): received 'team 08-09' next slot: 17 TX: 1357815223876 (-1 / 1)
+ 1357815223983 (slot 19): received 'team 08-17' next slot: 17 TX: 1357815223954 (29 / 0)
+ 1357815223985 (slot 19): received 'team 08-07' next slot: 17 TX: 1357815223958 (27 / -1)
+    >>>> collides with previous packet 
+   ========= Frame: 1357815224  ==================
+ 1357815224074 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815224077 (-3 / -1)
+ 1357815224075 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815224078 (-3 / -1)
+    >>>> collides with previous packet 
+ 1357815224189 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815224192 (-3 / -1)
+ 1357815224237 (slot  4): received 'team 08-06' next slot:  3 TX: 1357815224240 (-3 / -1)
+ 1357815224293 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815224296 (-3 / -1)
+ 1357815224326 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815224329 (-3 / -1)
+ 1357815224396 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815224399 (-3 / -1)
+ 1357815224493 (slot  9): received 'team 08-14' next slot:  9 TX: 1357815224495 (-2 / -1)
+ 1357815224576 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815224579 (-3 / -1)
+ 1357815224576 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815224579 (-3 / -1)
+    >>>> collides with previous packet 
+ 1357815224627 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815224630 (-3 / -1)
+ 1357815224628 (slot 12): received 'team 08-16' next slot: 12 TX: 1357815224631 (-3 / -1)
+    >>>> collides with previous packet 
+ 1357815224676 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815224679 (-3 / -1)
+ 1357815224724 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815224727 (-3 / -1)
+ 1357815224745 (slot 14): received 'team 08-01' next slot: 12 TX: 1357815224667 (78 / -5)
+    >>>> collides with previous packet 
+ 1357815224829 (slot 16): received 'team 08-15' next slot: 15 TX: 1357815224836 (-7 / -5)
+ 1357815224871 (slot 17): received 'team 08-09' next slot: 17 TX: 1357815224877 (-6 / -5)
+ 1357815224872 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815224878 (-6 / -5)
+    >>>> collides with previous packet 
+ 1357815224878 (slot 17): received 'team 08-07' next slot: 17 TX: 1357815224883 (-5 / -3)
+    >>>> collides with previous packet 
+ 1357815224975 (slot 19): received 'team 08-03' next slot: 19 TX: 1357815224979 (-4 / -2)
+   ========= Frame: 1357815225  ==================
+ 1357815225074 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815225078 (-4 / -2)
+ 1357815225075 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815225079 (-4 / -2)
+    >>>> collides with previous packet 
+ 1357815225173 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815225177 (-4 / -2)
+ 1357815225175 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815225178 (-3 / -2)
+    >>>> collides with previous packet 
+ 1357815225315 (slot  6): received 'team 08-00' next slot:  5 TX: 1357815225319 (-4 / -2)
+ 1357815225324 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815225328 (-4 / -2)
+    >>>> collides with previous packet 
+ 1357815225392 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815225396 (-4 / -2)
+ 1357815225474 (slot  9): received 'team 08-14' next slot:  9 TX: 1357815225477 (-3 / -2)
+ 1357815225613 (slot 12): received 'team 08-02' next slot: 11 TX: 1357815225617 (-4 / -2)
+ 1357815225627 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815225631 (-4 / -2)
+    >>>> collides with previous packet 
+ 1357815225649 (slot 12): received 'team 08-16' next slot: 12 TX: 1357815225653 (-4 / -2)
+    >>>> collides with previous packet 
+ 1357815225671 (slot 13): received 'team 08-01' next slot: 12 TX: 1357815225675 (-4 / -2)
+ 1357815225674 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815225677 (-3 / -2)
+    >>>> collides with previous packet 
+ 1357815225710 (slot 14): received 'team 08-04' next slot: 11 TX: 1357815225714 (-4 / -2)
+ 1357815225726 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815225727 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815225778 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815225778 (0 / 1)
+ 1357815225878 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815225879 (-1 / 1)
+ 1357815225921 (slot 18): received 'team 08-07' next slot: 17 TX: 1357815225922 (-1 / 1)
+   ========= Frame: 1357815226  ==================
+ 1357815226068 (slot  1): received 'team 08-09' next slot: 17 TX: 1357815226068 (0 / 1)
+ 1357815226074 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815226075 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815226075 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815226076 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815226081 (slot  1): received 'team 08-03' next slot: 19 TX: 1357815226082 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815226175 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815226176 (-1 / 1)
+ 1357815226176 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815226177 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815226375 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815226376 (-1 / 1)
+ 1357815226385 (slot  7): received 'team 08-00' next slot:  5 TX: 1357815226386 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815226443 (slot  8): received 'team 08-18' next slot:  6 TX: 1357815226444 (-1 / 1)
+ 1357815226526 (slot 10): received 'team 08-14' next slot:  9 TX: 1357815226527 (-1 / 1)
+ 1357815226581 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815226582 (-1 / 1)
+ 1357815226605 (slot 12): received 'team 08-04' next slot: 11 TX: 1357815226606 (-1 / 1)
+ 1357815226672 (slot 13): received 'team 08-01' next slot: 12 TX: 1357815226672 (0 / 1)
+ 1357815226677 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815226678 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815226684 (slot 13): received 'team 08-16' next slot: 12 TX: 1357815226685 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815226717 (slot 14): received 'team 08-05' next slot: 12 TX: 1357815226717 (0 / 1)
+ 1357815226747 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815226747 (0 / 1)
+    >>>> collides with previous packet 
+ 1357815226782 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815226783 (-1 / 1)
+ 1357815226877 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815226878 (-1 / 1)
+ 1357815226879 (slot 17): received 'team 08-07' next slot: 17 TX: 1357815226879 (0 / 1)
+    >>>> collides with previous packet 
+   ========= Frame: 1357815227  ==================
+ 1357815227078 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815227079 (-1 / 1)
+ 1357815227078 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815227079 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815227186 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815227187 (-1 / 1)
+ 1357815227189 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815227190 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815227285 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815227286 (-1 / 1)
+ 1357815227378 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815227379 (-1 / 1)
+ 1357815227384 (slot  7): received 'team 08-18' next slot:  6 TX: 1357815227385 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815227478 (slot  9): received 'team 08-14' next slot:  9 TX: 1357815227479 (-1 / 1)
+ 1357815227577 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815227578 (-1 / 1)
+ 1357815227578 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815227579 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815227630 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815227631 (-1 / 1)
+ 1357815227631 (slot 12): received 'team 08-16' next slot: 12 TX: 1357815227632 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815227652 (slot 13): received 'team 08-01' next slot: 12 TX: 1357815227653 (-1 / 1)
+ 1357815227678 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815227679 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815227729 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815227730 (-1 / 1)
+ 1357815227790 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815227791 (-1 / 1)
+ 1357815227876 (slot 17): received 'team 08-09' next slot: 17 TX: 1357815227877 (-1 / 1)
+ 1357815227936 (slot 18): received 'team 08-07' next slot: 17 TX: 1357815227937 (-1 / 1)
+ 1357815227950 (slot 19): received 'team 08-17' next slot: 17 TX: 1357815227925 (25 / 0)
+   ========= Frame: 1357815228  ==================
+ 1357815228012 (slot  0): received 'team 08-03' next slot: 19 TX: 1357815228014 (-2 / 0)
+ 1357815228077 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815228079 (-2 / 0)
+ 1357815228090 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815228092 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815228177 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815228179 (-2 / 0)
+ 1357815228179 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815228181 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815228277 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815228279 (-2 / 0)
+ 1357815228329 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815228331 (-2 / 0)
+ 1357815228375 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815228377 (-2 / 0)
+ 1357815228478 (slot  9): received 'team 08-14' next slot:  9 TX: 1357815228479 (-1 / 0)
+ 1357815228578 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815228579 (-1 / 0)
+ 1357815228605 (slot 12): received 'team 08-02' next slot: 11 TX: 1357815228607 (-2 / 0)
+ 1357815228624 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815228626 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815228674 (slot 13): received 'team 08-16' next slot: 12 TX: 1357815228676 (-2 / 0)
+ 1357815228675 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815228677 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815228700 (slot 14): received 'team 08-05' next slot: 12 TX: 1357815228702 (-2 / 0)
+ 1357815228727 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815228729 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815228881 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815228883 (-2 / 0)
+ 1357815228882 (slot 17): received 'team 08-15' next slot: 15 TX: 1357815228849 (33 / -1)
+    >>>> collides with previous packet 
+ 1357815228978 (slot 19): received 'team 08-09' next slot: 17 TX: 1357815228980 (-2 / -1)
+ 1357815228995 (slot 19): received 'team 08-07' next slot: 17 TX: 1357815228997 (-2 / 0)
+    >>>> collides with previous packet 
+   ========= Frame: 1357815229  ==================
+ 1357815229088 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815229090 (-2 / 0)
+ 1357815229177 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815229179 (-2 / 0)
+ 1357815229178 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815229180 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815229189 (slot  3): received 'team 08-12' next slot:  1 TX: 1357815229171 (18 / -1)
+    >>>> collides with previous packet 
+ 1357815229277 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815229280 (-3 / -1)
+ 1357815229323 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815229326 (-3 / -1)
+ 1357815229377 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815229379 (-2 / -1)
+ 1357815229577 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815229579 (-2 / -1)
+ 1357815229587 (slot 11): received 'team 08-14' next slot:  9 TX: 1357815229561 (26 / -2)
+    >>>> collides with previous packet 
+ 1357815229593 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815229597 (-4 / -2)
+    >>>> collides with previous packet 
+ 1357815229635 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815229639 (-4 / -2)
+ 1357815229654 (slot 13): received 'team 08-01' next slot: 12 TX: 1357815229658 (-4 / -2)
+ 1357815229664 (slot 13): received 'team 08-16' next slot: 12 TX: 1357815229668 (-4 / -2)
+    >>>> collides with previous packet 
+ 1357815229739 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815229743 (-4 / -2)
+ 1357815229754 (slot 15): received 'team 08-10' next slot: 13 TX: 1357815229758 (-4 / -2)
+ 1357815229801 (slot 16): received 'team 08-15' next slot: 15 TX: 1357815229805 (-4 / -2)
+ 1357815229888 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815229891 (-3 / -2)
+ 1357815229981 (slot 19): received 'team 08-03' next slot: 19 TX: 1357815229982 (-1 / 0)
+ 1357815229981 (slot 19): received 'team 08-09' next slot: 17 TX: 1357815229955 (26 / -2)
+    >>>> collides with previous packet 
+ 1357815229987 (slot 19): received 'team 08-07' next slot: 17 TX: 1357815229991 (-4 / -2)
+    >>>> collides with previous packet 
+   ========= Frame: 1357815230  ==================
+ 1357815230075 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815230079 (-4 / -2)
+ 1357815230076 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815230080 (-4 / -2)
+    >>>> collides with previous packet 
+ 1357815230251 (slot  5): received 'team 08-06' next slot:  3 TX: 1357815230225 (26 / -3)
+ 1357815230264 (slot  5): received 'team 08-11' next slot:  3 TX: 1357815230268 (-4 / -2)
+    >>>> collides with previous packet 
+ 1357815230272 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815230276 (-4 / -2)
+    >>>> collides with previous packet 
+ 1357815230375 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815230379 (-4 / -2)
+ 1357815230385 (slot  7): received 'team 08-18' next slot:  6 TX: 1357815230389 (-4 / -2)
+    >>>> collides with previous packet 
+ 1357815230556 (slot 11): received 'team 08-14' next slot:  9 TX: 1357815230559 (-3 / -2)
+ 1357815230573 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815230576 (-3 / -1)
+    >>>> collides with previous packet 
+ 1357815230574 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815230577 (-3 / -1)
+    >>>> collides with previous packet 
+ 1357815230626 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815230628 (-2 / -1)
+ 1357815230626 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815230629 (-3 / -1)
+    >>>> collides with previous packet 
+ 1357815230656 (slot 13): received 'team 08-16' next slot: 12 TX: 1357815230659 (-3 / -1)
+ 1357815230685 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815230687 (-2 / -1)
+    >>>> collides with previous packet 
+ 1357815230781 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815230784 (-3 / -1)
+ 1357815230873 (slot 17): received 'team 08-13' next slot: 14 TX: 1357815230850 (23 / -2)
+ 1357815230874 (slot 17): received 'team 08-09' next slot: 17 TX: 1357815230878 (-4 / -2)
+    >>>> collides with previous packet 
+ 1357815230875 (slot 17): received 'team 08-07' next slot: 17 TX: 1357815230879 (-4 / -2)
+    >>>> collides with previous packet 
+ 1357815230964 (slot 19): received 'team 08-17' next slot: 17 TX: 1357815230966 (-2 / -1)
+   ========= Frame: 1357815231  ==================
+ 1357815231075 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815231077 (-2 / -1)
+ 1357815231076 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815231078 (-2 / -1)
+    >>>> collides with previous packet 
+ 1357815231087 (slot  1): received 'team 08-03' next slot: 19 TX: 1357815231059 (28 / -2)
+    >>>> collides with previous packet 
+ 1357815231175 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815231178 (-3 / -1)
+ 1357815231176 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815231179 (-3 / -1)
+    >>>> collides with previous packet 
+ 1357815231275 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815231278 (-3 / -1)
+ 1357815231345 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815231348 (-3 / -1)
+ 1357815231374 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815231377 (-3 / -1)
+ 1357815231598 (slot 11): received 'team 08-14' next slot:  9 TX: 1357815231601 (-3 / -1)
+ 1357815231606 (slot 12): received 'team 08-02' next slot: 11 TX: 1357815231608 (-2 / -1)
+ 1357815231614 (slot 12): received 'team 08-04' next slot: 11 TX: 1357815231616 (-2 / -1)
+    >>>> collides with previous packet 
+ 1357815231631 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815231634 (-3 / -1)
+    >>>> collides with previous packet 
+ 1357815231646 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815231648 (-2 / -1)
+    >>>> collides with previous packet 
+ 1357815231675 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815231678 (-3 / -1)
+ 1357815231703 (slot 14): received 'team 08-16' next slot: 12 TX: 1357815231706 (-3 / -1)
+ 1357815231724 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815231726 (-2 / -1)
+    >>>> collides with previous packet 
+ 1357815231875 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815231876 (-1 / 0)
+ 1357815231875 (slot 17): received 'team 08-09' next slot: 17 TX: 1357815231877 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815231875 (slot 17): received 'team 08-07' next slot: 17 TX: 1357815231877 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815231888 (slot 17): received 'team 08-15' next slot: 15 TX: 1357815231863 (25 / -1)
+    >>>> collides with previous packet 
+   ========= Frame: 1357815232  ==================
+ 1357815232075 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815232078 (-3 / -1)
+ 1357815232084 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815232087 (-3 / -1)
+    >>>> collides with previous packet 
+ 1357815232177 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815232179 (-2 / 0)
+ 1357815232178 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815232180 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815232329 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815232331 (-2 / 0)
+ 1357815232364 (slot  7): received 'team 08-00' next slot:  5 TX: 1357815232365 (-1 / 0)
+ 1357815232425 (slot  8): received 'team 08-19' next slot:  7 TX: 1357815232426 (-1 / 0)
+ 1357815232509 (slot 10): received 'team 08-14' next slot:  9 TX: 1357815232510 (-1 / 0)
+ 1357815232598 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815232600 (-2 / 0)
+ 1357815232640 (slot 12): received 'team 08-16' next slot: 12 TX: 1357815232642 (-2 / 0)
+ 1357815232641 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815232643 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815232642 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815232643 (-1 / 0)
+    >>>> collides with previous packet 
+ 1357815232646 (slot 12): received 'team 08-02' next slot: 11 TX: 1357815232648 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815232729 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815232731 (-2 / 0)
+ 1357815232772 (slot 15): received 'team 08-10' next slot: 13 TX: 1357815232774 (-2 / 0)
+ 1357815232863 (slot 17): received 'team 08-15' next slot: 15 TX: 1357815232860 (3 / 0)
+ 1357815232878 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815232879 (-1 / 0)
+    >>>> collides with previous packet 
+ 1357815232879 (slot 17): received 'team 08-09' next slot: 17 TX: 1357815232881 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815232880 (slot 17): received 'team 08-07' next slot: 17 TX: 1357815232882 (-2 / 0)
+    >>>> collides with previous packet 
+   ========= Frame: 1357815233  ==================
+ 1357815233101 (slot  2): received 'team 08-03' next slot: 19 TX: 1357815233102 (-1 / 1)
+ 1357815233103 (slot  2): received 'team 08-12' next slot:  1 TX: 1357815233103 (0 / 1)
+    >>>> collides with previous packet 
+ 1357815233115 (slot  2): received 'team 08-08' next slot:  1 TX: 1357815233116 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815233178 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815233178 (0 / 1)
+ 1357815233179 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815233180 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815233278 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815233279 (-1 / 1)
+ 1357815233334 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815233335 (-1 / 1)
+ 1357815233381 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815233382 (-1 / 1)
+ 1357815233576 (slot 11): received 'team 08-14' next slot:  9 TX: 1357815233551 (25 / 0)
+ 1357815233579 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815233579 (0 / 0)
+    >>>> collides with previous packet 
+ 1357815233583 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815233585 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815233625 (slot 12): received 'team 08-16' next slot: 12 TX: 1357815233626 (-1 / 0)
+ 1357815233625 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815233627 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815233626 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815233628 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815233726 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815233728 (-2 / 0)
+ 1357815233739 (slot 14): received 'team 08-10' next slot: 13 TX: 1357815233741 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815233791 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815233793 (-2 / 0)
+ 1357815233876 (slot 17): received 'team 08-07' next slot: 17 TX: 1357815233878 (-2 / 0)
+ 1357815233878 (slot 17): received 'team 08-09' next slot: 17 TX: 1357815233879 (-1 / 0)
+    >>>> collides with previous packet 
+ 1357815233924 (slot 18): received 'team 08-17' next slot: 17 TX: 1357815233926 (-2 / 0)
+   ========= Frame: 1357815234  ==================
+ 1357815234077 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815234079 (-2 / 0)
+ 1357815234079 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815234081 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815234176 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815234178 (-2 / 0)
+ 1357815234177 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815234179 (-2 / 0)
+    >>>> collides with previous packet 
+ 1357815234293 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815234294 (-1 / 0)
+ 1357815234325 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815234327 (-2 / 0)
+ 1357815234377 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815234379 (-2 / 0)
+ 1357815234480 (slot  9): received 'team 08-14' next slot:  9 TX: 1357815234482 (-2 / 0)
+ 1357815234582 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815234583 (-1 / 1)
+ 1357815234596 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815234596 (0 / 1)
+    >>>> collides with previous packet 
+ 1357815234626 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815234627 (-1 / 1)
+ 1357815234627 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815234627 (0 / 1)
+    >>>> collides with previous packet 
+ 1357815234628 (slot 12): received 'team 08-16' next slot: 12 TX: 1357815234629 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815234678 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815234679 (-1 / 1)
+ 1357815234778 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815234779 (-1 / 1)
+ 1357815234821 (slot 16): received 'team 08-13' next slot: 14 TX: 1357815234821 (0 / 1)
+ 1357815234878 (slot 17): received 'team 08-09' next slot: 17 TX: 1357815234879 (-1 / 1)
+ 1357815234879 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815234880 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815234911 (slot 18): received 'team 08-07' next slot: 17 TX: 1357815234912 (-1 / 1)
+   ========= Frame: 1357815235  ==================
+ 1357815235075 (slot  1): received 'team 08-03' next slot: 19 TX: 1357815235076 (-1 / 1)
+ 1357815235076 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815235077 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815235104 (slot  2): received 'team 08-12' next slot:  1 TX: 1357815235105 (-1 / 1)
+ 1357815235177 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815235178 (-1 / 1)
+ 1357815235178 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815235178 (0 / 1)
+    >>>> collides with previous packet 
+ 1357815235278 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815235279 (-1 / 1)
+ 1357815235330 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815235331 (-1 / 1)
+ 1357815235378 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815235379 (-1 / 1)
+ 1357815235525 (slot 10): received 'team 08-14' next slot:  9 TX: 1357815235526 (-1 / 1)
+ 1357815235578 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815235579 (-1 / 1)
+ 1357815235608 (slot 12): received 'team 08-02' next slot: 11 TX: 1357815235608 (0 / 1)
+ 1357815235626 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815235627 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815235635 (slot 12): received 'team 08-16' next slot: 12 TX: 1357815235636 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815235680 (slot 13): received 'team 08-05' next slot: 12 TX: 1357815235681 (-1 / 1)
+ 1357815235681 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815235682 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815235770 (slot 15): received 'team 08-13' next slot: 14 TX: 1357815235771 (-1 / 1)
+ 1357815235778 (slot 15): received 'team 08-15' next slot: 15 TX: 1357815235778 (0 / 1)
+    >>>> collides with previous packet 
+ 1357815235877 (slot 17): received 'team 08-07' next slot: 17 TX: 1357815235878 (-1 / 1)
+ 1357815235878 (slot 17): received 'team 08-09' next slot: 17 TX: 1357815235879 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815235901 (slot 18): received 'team 08-17' next slot: 17 TX: 1357815235902 (-1 / 1)
+   ========= Frame: 1357815236  ==================
+ 1357815236078 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815236078 (0 / 1)
+ 1357815236079 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815236080 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815236178 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815236179 (-1 / 1)
+ 1357815236180 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815236181 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815236277 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815236278 (-1 / 1)
+ 1357815236330 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815236331 (-1 / 1)
+ 1357815236379 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815236379 (0 / 1)
+ 1357815236478 (slot  9): received 'team 08-14' next slot:  9 TX: 1357815236479 (-1 / 1)
+ 1357815236579 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815236580 (-1 / 1)
+ 1357815236630 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815236631 (-1 / 1)
+ 1357815236639 (slot 12): received 'team 08-16' next slot: 12 TX: 1357815236640 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815236644 (slot 12): received 'team 08-02' next slot: 11 TX: 1357815236645 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815236675 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815236676 (-1 / 1)
+ 1357815236730 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815236731 (-1 / 1)
+ 1357815236826 (slot 16): received 'team 08-15' next slot: 15 TX: 1357815236827 (-1 / 1)
+ 1357815236836 (slot 16): received 'team 08-05' next slot: 12 TX: 1357815236836 (0 / 1)
+    >>>> collides with previous packet 
+ 1357815236878 (slot 17): received 'team 08-17' next slot: 17 TX: 1357815236879 (-1 / 1)
+ 1357815236881 (slot 17): received 'team 08-09' next slot: 17 TX: 1357815236881 (0 / 1)
+    >>>> collides with previous packet 
+ 1357815236910 (slot 18): received 'team 08-07' next slot: 17 TX: 1357815236911 (-1 / 1)
+ 1357815236978 (slot 19): received 'team 08-03' next slot: 19 TX: 1357815236979 (-1 / 1)
+   ========= Frame: 1357815237  ==================
+ 1357815237078 (slot  1): received 'team 08-08' next slot:  1 TX: 1357815237079 (-1 / 1)
+ 1357815237079 (slot  1): received 'team 08-12' next slot:  1 TX: 1357815237080 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815237181 (slot  3): received 'team 08-06' next slot:  3 TX: 1357815237182 (-1 / 1)
+ 1357815237183 (slot  3): received 'team 08-11' next slot:  3 TX: 1357815237183 (0 / 1)
+    >>>> collides with previous packet 
+ 1357815237296 (slot  5): received 'team 08-00' next slot:  5 TX: 1357815237296 (0 / 1)
+ 1357815237325 (slot  6): received 'team 08-18' next slot:  6 TX: 1357815237326 (-1 / 1)
+ 1357815237395 (slot  7): received 'team 08-19' next slot:  7 TX: 1357815237396 (-1 / 1)
+ 1357815237482 (slot  9): received 'team 08-14' next slot:  9 TX: 1357815237483 (-1 / 1)
+ 1357815237576 (slot 11): received 'team 08-02' next slot: 11 TX: 1357815237577 (-1 / 1)
+ 1357815237577 (slot 11): received 'team 08-04' next slot: 11 TX: 1357815237578 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815237625 (slot 12): received 'team 08-05' next slot: 12 TX: 1357815237626 (-1 / 1)
+ 1357815237626 (slot 12): received 'team 08-01' next slot: 12 TX: 1357815237627 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815237628 (slot 12): received 'team 08-16' next slot: 12 TX: 1357815237629 (-1 / 1)
+    >>>> collides with previous packet 
+ 1357815237677 (slot 13): received 'team 08-10' next slot: 13 TX: 1357815237678 (-1 / 1)
+ 1357815237730 (slot 14): received 'team 08-13' next slot: 14 TX: 1357815237731 (-1 / 1)
+ 1357815237878 (slot 17): 
