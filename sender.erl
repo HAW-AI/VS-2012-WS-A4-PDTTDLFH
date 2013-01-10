@@ -150,7 +150,8 @@ handle_sync_event(_Event, _From, StateName, State) ->
   Reply = ok,
   {reply, Reply, StateName, State}.
 
-handle_info(_Info, StateName, State) ->
+handle_info(Info, StateName, State) ->
+  utility:log("sender how about sending gen server a msg in a proper way: ~p~n",[Info]),
   {next_state, StateName, State}.
 
 code_change(_OldVsn, StateName, State, _Extra) ->

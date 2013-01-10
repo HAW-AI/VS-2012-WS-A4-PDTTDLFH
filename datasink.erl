@@ -43,8 +43,8 @@ handle_call(_Request, _From, State) ->
   Reply = ok,
   {reply, Reply, State}.
 
-handle_info(_Info, State) ->
-  utility:log(io_lib:format("how about sending gen server a msg in a proper way")),
+handle_info(Info, State) ->
+  utility:log("datasink: how about sending gen server a msg in a proper way: ~p~n",[Info]),
   {noreply, State}.
 
 code_change(_OldVsn, State, _Extra) ->
