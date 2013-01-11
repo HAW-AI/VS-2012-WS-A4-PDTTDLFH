@@ -3,7 +3,7 @@
 -behaviour(gen_server).
 
 %% API
--export([start/3]).
+-export([start/4]).
 
 %% gen_server callbacks
 -export([init/1,
@@ -15,13 +15,14 @@
 
 -record(state, {coordinator_pid :: pid(),
                 receiving_socket,
-				own_ip}).
+				own_ip,
+				own_sending_port}).
 
-start(CoordinatorPID, ReceivingSocket, LocalIp) ->
-  gen_server:start(?MODULE, [CoordinatorPID, ReceivingSocket, LocalIp], []).
+start(CoordinatorPID, ReceivingSocket, LocalIp, SendingPort) ->
+  gen_server:start(?MODULE, [CoordinatorPID, ReceivingSocket, LocalIp, SendingPort], []).
 
-init([CoordinatorPID, ReceivingSocket, LocalIp]) ->
-  {ok, #state{coordinator_pid  = CoordinatorPID, receiving_socket = ReceivingSocket, own_ip = LocalIp}}.
+init([CoordinatorPID, ReceivingSocket, LocalIp, SendingPort]) ->
+  {ok, #state{coordinator_pid  = CoordinatorPID, receiving_socket = ReceivingSocket, own_ip = LocalIp, own_sending_port = SendingPort}}.
 
 handle_cast(kill, State) ->
   utility:log("receiver: received kill message"),
@@ -38,8 +39,8 @@ terminate(_Reason, State) ->
   utility:log("receiver: terminated"),
   ok.
 
-handle_info({udp, _Socket, IPtuple, _InPortNo, Packet}, State) ->
-  case inet_parse:ntoa(IPtuple) == atom_to_list(State#state.own_ip) of
+handle_info({udp, _Socket, IPtuple, InPortNo, Packet}, State) ->
+  case (inet_parse:ntoa(IPtuple) == atom_to_list(State#state.own_ip)) and (InPortNo == State#state.own_sending_port) of
     true ->
 	  utility:log("receiver: received own packet");
     false ->

@@ -78,7 +78,7 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
 									 
   utility:log("sending socket ~p~n",[inet:port(SendingSocket)]),
   %%% start the receiver and sender processes
-  {ok, ReceiverPID} = receiver:start(self(), ReceivingSocket, LocalIP),
+  {ok, ReceiverPID} = receiver:start(self(), ReceivingSocket, LocalIP, SendingPort),
   {ok, SenderPID}   =   sender:start(self(),
                                      SendingSocket,
                                      ParsedMulticastIP,
