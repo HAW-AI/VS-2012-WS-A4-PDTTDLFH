@@ -99,7 +99,7 @@ send_message({next_slot, NextSlot}, State) ->
   Packet = build_packet(State#state.data, NextSlot),
   SendingTime = utility:current_timestamp(),
   utility:log(io:format("sending now ~p~n", [utility:current_timestamp()])),
-  OutOfSlot = State#state.slot =!= utility:slot_of_timestamp(SendingTime),
+  OutOfSlot = State#state.slot /= utility:slot_of_timestamp(SendingTime),
   case OutOfSlot of
     true ->
         utility:log("Out of slot. Cancel sending!");
