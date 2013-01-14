@@ -19,6 +19,7 @@
          code_change/4]).
 
 -define (MAX_QUEUE_LENGTH, 30).
+-define (MAX_ADJUSTMENT_TIME, 25).
 
 -record(state, {datasource_pid :: pid(), % PID of the datasource gen_server
                 sending_socket,          %
@@ -64,7 +65,7 @@ waiting_for_input({input, Data}, State) ->
       utility:log(io:format("waiting_for_input: data empty, waiting for next frame~n")),
       {next_state, waiting_for_slot, State};
     false ->
-      AvgTimeDiff = min(average(queue:to_list(State#state.sending_time_differences)),0), %0 = no adjustment at all time
+      AvgTimeDiff = min(average(queue:to_list(State#state.sending_time_differences)), ?MAX_ADJUSTMENT_TIME), %0 = no adjustment at all time
       AspiredSendingTime = utility:current_timestamp()+utility:time_until_slot(State#state.slot, AvgTimeDiff),
       utility:log(io:format("should send: ~p~n", [AspiredSendingTime])),
       Time = utility:time_until_slot(State#state.slot, AvgTimeDiff),
