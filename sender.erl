@@ -71,7 +71,8 @@ waiting_for_input({input, Data}, State) ->
       Time = utility:time_until_slot(State#state.slot, AvgTimeDiff),
       case Time > 0 of
         true ->
-          gen_fsm:send_event_after(Time, revise_next_slot);
+          % timers can't handle floats! truncate the time to get an int
+          gen_fsm:send_event_after(trunc(Time), revise_next_slot);
         _ ->
           gen_fsm:send_event(self(), revise_next_slot)
       end,
