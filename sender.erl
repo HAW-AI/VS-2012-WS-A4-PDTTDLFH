@@ -99,10 +99,16 @@ send_message({next_slot, NextSlot}, State) ->
   Packet = build_packet(State#state.data, NextSlot),
   SendingTime = utility:current_timestamp(),
   utility:log(io:format("sending now ~p~n", [utility:current_timestamp()])),
-  gen_udp:send(State#state.sending_socket,
+  OutOfSlot = State#state.slot == utility:slot_of_timestamp(SendingTime),
+  case OutOfSlot of
+    true ->
+        utility:log("Out of slot. Cancel sending!", [utility:current_timestamp()]);
+    false ->
+      gen_udp:send(State#state.sending_socket,
                State#state.multicast_ip,
                State#state.receiving_port,
-               Packet),
+               Packet)
+  end,
   SentTime = utility:current_timestamp(),
   SendingTimeDifference = SentTime - State#state.timestamp_aspired_sending,
   SendingTimeDifferenceQueue = enqueue(SendingTimeDifference, State#state.sending_time_differences),
