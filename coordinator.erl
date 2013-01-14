@@ -211,16 +211,8 @@ utility:log("creating timer"),
 	erlang:send_after(Time - (utility:current_timestamp() rem 1000),self(),Msg).
 
 calculate_free_slot(Slotwishes) ->
-	utility:log("calc free slot"),
-  NonCollisionSlots = dict:filter(
-    %%% Valid slots just have one sender.
-    fun(_,V) ->
-      length(V) == 1 %%% V = list of stations
-    end,
-    Slotwishes
-  ),
-  AvailableSlots = lists:subtract(lists:seq(0,19),
-                                  dict:fetch_keys(NonCollisionSlots)),
+  utility:log("calc free slot"),
+  AvailableSlots = lists:subtract(lists:seq(0,19), dict:fetch_keys(Slotwishes)),
   case length(AvailableSlots) == 0 of
 	true ->
 	  no_free_slot;
