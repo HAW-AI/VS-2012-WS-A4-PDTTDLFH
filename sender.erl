@@ -102,7 +102,7 @@ send_message({next_slot, NextSlot}, State) ->
   OutOfSlot = State#state.slot == utility:slot_of_timestamp(SendingTime),
   case OutOfSlot of
     true ->
-        utility:log("Out of slot. Cancel sending!", [utility:current_timestamp()]);
+        utility:log("Out of slot. Cancel sending!");
     false ->
       gen_udp:send(State#state.sending_socket,
                State#state.multicast_ip,
