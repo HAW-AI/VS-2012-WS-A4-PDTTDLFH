@@ -29,7 +29,7 @@ handle_cast(kill, State) ->
   {stop, normal, State}; % calls :terminate and then shuts down
 
 handle_cast(UnknownMessage, State) ->
-  utility:log(io:format("received unknown msg: ~p~n", [UnknownMessage])),
+  utility:log("received unknown msg: ~p~n", [UnknownMessage]),
   {noreply, State}.
 
 %%% do everything required for a clean shutdown

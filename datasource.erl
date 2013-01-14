@@ -31,7 +31,7 @@ handle_cast({input, Data}, State) ->
   {noreply, State#state{current_data=Data}};
 
 handle_cast({get_data, PID}, State) ->
-  utility:log(io_lib:format("data transfered to sender: ~s~n",[State#state.current_data])),
+  utility:log("data transfered to sender: ~s~n",[State#state.current_data]),
   gen_fsm:send_event(PID,{input, State#state.current_data}),
   {noreply, State#state{current_data=[]}};
 
@@ -40,7 +40,7 @@ handle_cast(kill, State) ->
   {stop, normal, State};
 
 handle_cast(Any, State) ->
-  utility:log(io_lib:format("received unknown msg: ~p~n",[Any])),
+  utility:log("received unknown msg: ~p~n",[Any]),
   {noreply, State}.
 
 %%% do everything required for a clean shutdown

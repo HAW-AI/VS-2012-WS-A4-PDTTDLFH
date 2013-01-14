@@ -51,23 +51,23 @@ init([CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort]) ->
                                }}.
 
 waiting_for_slot({slot, Slot}, State) ->
-  utility:log(io:format("waiting_for_slot: {slot, ~p}~n", [Slot])),
+  utility:log("waiting_for_slot: {slot, ~p}~n", [Slot]),
   gen_server:cast(State#state.datasource_pid,{get_data, self()}),
   {next_state, waiting_for_input, State#state{slot = Slot}};
 waiting_for_slot(Event, State) ->
-  utility:log(io:format("waiting_for_slot: unknown event: ~p~n", [Event])),
+  utility:log("waiting_for_slot: unknown event: ~p~n", [Event]),
   {next_state, waiting_for_slot, State}.
 
 waiting_for_input({input, Data}, State) ->
-  utility:log(io:format("waiting_for_input: {input, ~p}~n", [Data])),
+  utility:log("waiting_for_input: {input, ~p}~n", [Data]),
   case Data == [] of
     true ->
-      utility:log(io:format("waiting_for_input: data empty, waiting for next frame~n")),
+      utility:log("waiting_for_input: data empty, waiting for next frame~n"),
       {next_state, waiting_for_slot, State};
     false ->
       AvgTimeDiff = min(average(queue:to_list(State#state.sending_time_differences)), ?MAX_ADJUSTMENT_TIME), %0 = no adjustment at all time
       AspiredSendingTime = utility:current_timestamp()+utility:time_until_slot(State#state.slot, AvgTimeDiff),
-      utility:log(io:format("should send: ~p~n", [AspiredSendingTime])),
+      utility:log("should send: ~p~n", [AspiredSendingTime]),
       Time = utility:time_until_slot(State#state.slot, AvgTimeDiff),
       case Time > 0 of
         true ->
@@ -81,24 +81,24 @@ waiting_for_input({input, Data}, State) ->
   end;
 
 waiting_for_input(Event, State) ->
-  utility:log(io:format("waiting_for_input: unknown event: ~p~n", [Event])),
+  utility:log("waiting_for_input: unknown event: ~p~n", [Event]),
   {next_state, waiting_for_input, State}.
 
 revising_next_slot(revise_next_slot, State) ->
-  utility:log(io:format("revising_next_slot: ~p~n", [State#state.slot])),
+  utility:log("revising_next_slot: ~p~n", [State#state.slot]),
   RevisingTime = utility:current_timestamp(),
-  utility:log(io:format("should send now: ~p~n", [RevisingTime])),
+  utility:log("should send now: ~p~n", [RevisingTime]),
   gen_server:cast(State#state.coordinator_pid,{revise_next_slot, State#state.slot}),
   {next_state, send_message, State#state{timestamp_revising=RevisingTime}};
 revising_next_slot(Event, State) ->
-  utility:log(io:format("revising_next_slot: unknown event: ~p~n", [Event])),
+  utility:log("revising_next_slot: unknown event: ~p~n", [Event]),
   {next_state, revising_next_slot, State}.
 
 send_message({next_slot, NextSlot}, State) ->
-  utility:log(io:format("send_message: next_slot ~p~n", [NextSlot])),
+  utility:log("send_message: next_slot ~p~n", [NextSlot]),
   Packet = build_packet(State#state.data, NextSlot),
   SendingTime = utility:current_timestamp(),
-  utility:log(io:format("sending now ~p~n", [utility:current_timestamp()])),
+  utility:log("sending now ~p~n", [utility:current_timestamp()]),
   OutOfSlot = State#state.slot /= utility:slot_of_timestamp(SendingTime),
   case OutOfSlot of
     true ->
@@ -113,16 +113,16 @@ send_message({next_slot, NextSlot}, State) ->
   SendingTimeDifference = SentTime - State#state.timestamp_aspired_sending,
   SendingTimeDifferenceQueue = enqueue(SendingTimeDifference, State#state.sending_time_differences),
   AvarageDifference = average(queue:to_list(SendingTimeDifferenceQueue)),
-  utility:log(io:format("sent ~p [Diff.: ~p Avg.: ~p]~n", [SentTime,SendingTimeDifference,AvarageDifference])),
+  utility:log("sent ~p [Diff.: ~p Avg.: ~p]~n", [SentTime,SendingTimeDifference,AvarageDifference]),
   {next_state, waiting_for_slot, State#state{timestamp_sending=SendingTime, timestamp_sent=SentTime, sending_time_differences=SendingTimeDifferenceQueue}};
 
 send_message(no_free_slot, State) ->
-  utility:log(io:format("send_message: no free slot. skipping this frame!")),
+  utility:log("send_message: no free slot. skipping this frame!"),
   {next_state, waiting_for_slot, State};
 
 
 send_message(Event, State) ->
-  utility:log(io:format("send_message: unknown event: ~p~n", [Event])),
+  utility:log("send_message: unknown event: ~p~n", [Event]),
   {next_state, send_message, State}.
 
 average(List) ->
@@ -141,9 +141,6 @@ terminate(_Reason, _StateName, State) ->
   gen_server:cast(State#state.datasource_pid, kill),
   gen_udp:close(State#state.sending_socket),
   ok.
-
-
-
 
 %%% Helper functions
 build_packet(Data, Slotwish) ->
