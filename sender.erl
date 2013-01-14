@@ -18,6 +18,8 @@
          terminate/3,
          code_change/4]).
 
+-define (MAX_QUEUE_LENGTH, 30).
+
 -record(state, {datasource_pid :: pid(), % PID of the datasource gen_server
                 sending_socket,          %
                 multicast_ip,            % IP used for broadcast
@@ -29,7 +31,7 @@
         timestamp_revising,
         timestamp_sending,
         timestamp_sent,
-        sending_time_difference = []
+        sending_time_differences = queue:new()
                }).
 
 start(CoordinatorPID, SendingSocket, MulticastIP, ReceivingPort) ->
@@ -62,7 +64,7 @@ waiting_for_input({input, Data}, State) ->
       utility:log(io:format("waiting_for_input: data empty, waiting for next frame~n")),
       {next_state, waiting_for_slot, State};
     false ->
-      AvgTimeDiff = min(average(State#state.sending_time_difference),0), %0 = no adjustment at all time
+      AvgTimeDiff = min(average(queue:to_list(State#state.sending_time_differences)),0), %0 = no adjustment at all time
       AspiredSendingTime = utility:current_timestamp()+utility:time_until_slot(State#state.slot, AvgTimeDiff),
       utility:log(io:format("should send: ~p~n", [AspiredSendingTime])),
       Time = utility:time_until_slot(State#state.slot, AvgTimeDiff),
@@ -101,10 +103,10 @@ send_message({next_slot, NextSlot}, State) ->
                Packet),
   SentTime = utility:current_timestamp(),
   SendingTimeDifference = SentTime - State#state.timestamp_aspired_sending,
-  SendingTimeDifferenceList = [SendingTimeDifference | State#state.sending_time_difference],
-  AvarageDifference = average(SendingTimeDifferenceList),
-  utility:log(io:format("sent ~p [Diff.: ~p Avg.: ~p]~n", [SentTime,SendingTimeDifference,AvarageDifference])),    
-  {next_state, waiting_for_slot, State#state{timestamp_sending=SendingTime, timestamp_sent=SentTime, sending_time_difference=SendingTimeDifferenceList}};
+  SendingTimeDifferenceQueue = enqueue(SendingTimeDifference, State#state.sending_time_differences),
+  AvarageDifference = average(queue:to_list(SendingTimeDifferenceQueue)),
+  utility:log(io:format("sent ~p [Diff.: ~p Avg.: ~p]~n", [SentTime,SendingTimeDifference,AvarageDifference])),
+  {next_state, waiting_for_slot, State#state{timestamp_sending=SendingTime, timestamp_sent=SentTime, sending_time_differences=SendingTimeDifferenceQueue}};
 
 send_message(no_free_slot, State) ->
   utility:log(io:format("send_message: no free slot. skipping this frame!")),
@@ -114,7 +116,7 @@ send_message(no_free_slot, State) ->
 send_message(Event, State) ->
   utility:log(io:format("send_message: unknown event: ~p~n", [Event])),
   {next_state, send_message, State}.
-  
+
 average(List) ->
   case length(List) > 0 of
   true ->
@@ -144,6 +146,18 @@ build_packet(Data, Slotwish) ->
     Slotwish:8/integer-big,
     Timestamp:64/integer-big
   >>.
+
+% taken from http://stackoverflow.com/questions/4307544/setting-a-limit-to-a-queue-size
+% enqueue into a queue of fixed length (?MAX_QUEUE_LENGTH)
+enqueue(Value, Queue) ->
+  Pushed = queue:in(Value, Queue),
+  case queue:len(Pushed) of
+    Len when Len > ?MAX_QUEUE_LENGTH ->
+      Popped = queue:drop(Pushed),
+      Popped;
+    _ ->
+      Pushed
+  end.
 
 
 %%% OTP gen_fsm boilerplate - ignore this
