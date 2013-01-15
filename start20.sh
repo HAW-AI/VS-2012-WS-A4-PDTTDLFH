@@ -1,5 +1,7 @@
 #!/bin/bash
-for n in `seq 1 20`
+cp /dev/null log/all.log
+
+for n in `seq $2 $3`
 do
-(java datasource.DataSource $n 99 | erl -sname sender$n -setcookie vsp -boot start_sasl -noshell -s coordinator start 1337 $n 99 225.10.1.2 10.0.2.15) > log/$n.log &
+(java datasource.DataSource $n $n | erl +A25 -sname sender$n -setcookie vsp -boot start_sasl -noshell -s coordinator start 1337 $n $n 225.10.1.2 $1) >> log/all.log &
 done

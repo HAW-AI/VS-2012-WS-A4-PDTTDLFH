@@ -100,43 +100,6 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
               own_packet_collided = false             %
              }}.
 
-handle_cast(first_frame, State) ->
-	utility:log("lets start a new round"),
-	case calculate_free_slot(State#state.slot_wishes) of
-	  no_free_slot ->
-	  	utility:log("send_message: no free slot. skipping this frame!"),
-	    create_msg_timer(1000, first_frame),
-        {noreply, State#state{slot_wishes = dict:new(), used_slots=[], own_packet_collided = false}};
-	  Slot ->
-	  	utility:log("send_message: no free slot. skipping this frame!"),
-	    create_msg_timer(1000, new_frame),
-	    gen_fsm:send_event(State#state.sender_pid, {slot, Slot}),
-		{noreply, State#state{current_slot = Slot, slot_wishes = dict:new(), used_slots=[], own_packet_collided = false}}
-	end;
-	
-handle_cast(new_frame, State) ->
-	%start timer for next sending round
-	utility:log("lets start a new round"),
-	create_msg_timer(1000, new_frame),
-	NewCurrentSlot = case State#state.own_packet_collided of
-		true ->
-		    utility:log("own packet collided - calculating new slot"),
-			ASlot = case calculate_free_slot(State#state.slot_wishes) of
-				no_free_slot ->
-					utility:log("send_message: no free slot. skipping this frame!"),
-					State#state.current_slot;
-				Slot ->
-					gen_fsm:send_event(State#state.sender_pid, {slot, Slot}),
-					Slot
-			end,
-			ASlot;
-		false ->
-			gen_fsm:send_event(State#state.sender_pid, {slot, State#state.current_slot}),
-			State#state.current_slot
-	end,
-	%resetting state for next round except for the new slot
-	{noreply, State#state{current_slot = NewCurrentSlot, slot_wishes = dict:new(), used_slots=[], own_packet_collided = false}};
-
 %%% async incoming messages
 handle_cast({received, Slot, TimestampReceived, Packet}, State) ->
   utility:log("received something"),
@@ -167,26 +130,6 @@ handle_cast({received, Slot, TimestampReceived, Packet}, State) ->
       {noreply, State#state{slot_wishes = NewSlotwishes,
                             used_slots  = UsedSlots}}
   end;
-
-handle_cast({revise_next_slot, CurrentNextSlot}, State) ->
-	utility:log("coordinator: revising current next slot"),
-	case dict:is_key(CurrentNextSlot, State#state.slot_wishes) of
-		true -> %wish for slot, choose another
-			utility:log("coordinator: invalid - calculating new slot"),
-			NextSlot = case calculate_free_slot(State#state.slot_wishes) of
-              no_free_slot ->
-			    gen_fsm:send_event(State#state.sender_pid, no_free_slot),
-				CurrentNextSlot;
-              Slot ->
-			    gen_fsm:send_event(State#state.sender_pid, {next_slot, Slot}),
-				Slot
-			end,
-            {noreply, State#state{current_slot = NextSlot}};
-		false -> %still free, keep it
-			utility:log("coordinator: valid - just go on"),
-			gen_fsm:send_event(State#state.sender_pid, {next_slot, CurrentNextSlot}),
-			{noreply, State}
-	end;
 
 handle_cast(kill, State) ->
   {stop, normal, State};
@@ -246,12 +189,62 @@ parse_message(Packet) ->
   {StationIdentifier, StationNumber, Slot, Payload, Timestamp}.
 
 handle_info(first_frame, State) ->
-  gen_server:cast(self(), first_frame),
-  {noreply, State};  
+	utility:log("lets start a new round"),
+	case calculate_free_slot(State#state.slot_wishes) of
+	  no_free_slot ->
+	  	utility:log("send_message: no free slot. skipping this frame!"),
+	    create_msg_timer(1000, first_frame),
+        {noreply, State#state{slot_wishes = dict:new(), used_slots=[], own_packet_collided = false}};
+	  Slot ->
+	  	utility:log("send_message: no free slot. skipping this frame!"),
+	    create_msg_timer(1000, new_frame),
+	    gen_fsm:send_event(State#state.sender_pid, {slot, Slot}),
+		{noreply, State#state{current_slot = Slot, slot_wishes = dict:new(), used_slots=[], own_packet_collided = false}}
+	end;
   
 handle_info(new_frame, State) ->
-  gen_server:cast(self(), new_frame),
-  {noreply, State};
+	%start timer for next sending round
+	utility:log("lets start a new round"),
+	create_msg_timer(1000, new_frame),
+	NewCurrentSlot = case State#state.own_packet_collided of
+		true ->
+		    utility:log("own packet collided - calculating new slot"),
+			ASlot = case calculate_free_slot(State#state.slot_wishes) of
+				no_free_slot ->
+					utility:log("send_message: no free slot. skipping this frame!"),
+					State#state.current_slot;
+				Slot ->
+					gen_fsm:send_event(State#state.sender_pid, {slot, Slot}),
+					Slot
+			end,
+			ASlot;
+		false ->
+			gen_fsm:send_event(State#state.sender_pid, {slot, State#state.current_slot}),
+			State#state.current_slot
+	end,
+	%resetting state for next round except for the new slot
+	{noreply, State#state{current_slot = NewCurrentSlot, slot_wishes = dict:new(), used_slots=[], own_packet_collided = false}};
+
+handle_info({revise_next_slot, CurrentNextSlot}, State) ->
+	utility:log("coordinator: revising current next slot"),
+	case dict:is_key(CurrentNextSlot, State#state.slot_wishes) of
+		true -> %wish for slot, choose another
+			utility:log("coordinator: invalid - calculating new slot"),
+			NextSlot = case calculate_free_slot(State#state.slot_wishes) of
+              			no_free_slot ->
+			    		gen_fsm:send_event(State#state.sender_pid, no_free_slot),
+					CurrentNextSlot;
+				Slot ->
+			    		gen_fsm:send_event(State#state.sender_pid, {next_slot, Slot}),
+					Slot
+			end,
+			utility:log("station: ~p~n before: ~p~n after: ~p~n wishes: ~p~n",[State#state.station_number,CurrentNextSlot,NextSlot,dict:to_list(State#state.slot_wishes)]),
+            		{noreply, State#state{current_slot = NextSlot}};
+		false -> %still free, keep it
+			utility:log("coordinator: valid - just go on"),
+			gen_fsm:send_event(State#state.sender_pid, {next_slot, CurrentNextSlot}),
+			{noreply, State}
+	end;
 
 %%% OTP gen_server boilerplate - ignore this
 handle_info(Info, State) ->

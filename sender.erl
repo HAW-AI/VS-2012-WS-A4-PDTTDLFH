@@ -20,6 +20,7 @@
 
 -define (MAX_QUEUE_LENGTH, 30).
 -define (MAX_ADJUSTMENT_TIME, 25).
+-define (SENDING_TIME_ESTIMATION, 3).
 
 -record(state, {datasource_pid :: pid(), % PID of the datasource gen_server
                 sending_socket,          %
@@ -72,12 +73,15 @@ waiting_for_input({input, Data}, State) ->
       case Time > 0 of
         true ->
           % timers can't handle floats! truncate the time to get an int
-          gen_fsm:send_event_after(trunc(Time), revise_next_slot);
+          %gen_fsm:send_event_after(trunc(Time), revise_next_slot);
+          erlang:send_after(trunc(Time),State#state.coordinator_pid,{revise_next_slot, State#state.slot});
         _ ->
-          gen_fsm:send_event(self(), revise_next_slot)
+          %gen_fsm:send_event(self(), revise_next_slot)
+          gen_server:cast(State#state.coordinator_pid,{revise_next_slot, State#state.slot})
       end,
 
-      {next_state, revising_next_slot, State#state{data = Data, timestamp_aspired_sending=AspiredSendingTime}}
+      %{next_state, revising_next_slot, State#state{data = Data, timestamp_aspired_sending=AspiredSendingTime}}
+  {next_state, send_message, State#state{data = Data, timestamp_aspired_sending=AspiredSendingTime}}
   end;
 
 waiting_for_input(Event, State) ->
@@ -99,7 +103,7 @@ send_message({next_slot, NextSlot}, State) ->
   Packet = build_packet(State#state.data, NextSlot),
   SendingTime = utility:current_timestamp(),
   utility:log("sending now ~p~n", [utility:current_timestamp()]),
-  OutOfSlot = State#state.slot /= utility:slot_of_timestamp(SendingTime),
+  OutOfSlot = State#state.slot /= utility:slot_of_timestamp(SendingTime + ?SENDING_TIME_ESTIMATION),
   case OutOfSlot of
     true ->
         utility:log("Out of slot. Cancel sending!");
