@@ -9,7 +9,6 @@
 -export([init/1,
          waiting_for_slot/2,
          waiting_for_input/2,
-         revising_next_slot/2,
          send_message/2,
          state_name/3,
          handle_event/3,
@@ -72,11 +71,8 @@ waiting_for_input({input, Data}, State) ->
       Time = utility:time_until_slot(State#state.slot, AvgTimeDiff),
       case Time > 0 of
         true ->
-          % timers can't handle floats! truncate the time to get an int
-          %gen_fsm:send_event_after(trunc(Time), revise_next_slot);
           erlang:send_after(trunc(Time),State#state.coordinator_pid,{revise_next_slot, State#state.slot});
-        _ ->
-          %gen_fsm:send_event(self(), revise_next_slot)
+        false ->
           gen_server:cast(State#state.coordinator_pid,{revise_next_slot, State#state.slot})
       end,
 
@@ -87,16 +83,6 @@ waiting_for_input({input, Data}, State) ->
 waiting_for_input(Event, State) ->
   utility:log("waiting_for_input: unknown event: ~p~n", [Event]),
   {next_state, waiting_for_input, State}.
-
-revising_next_slot(revise_next_slot, State) ->
-  utility:log("revising_next_slot: ~p~n", [State#state.slot]),
-  RevisingTime = utility:current_timestamp(),
-  utility:log("should send now: ~p~n", [RevisingTime]),
-  gen_server:cast(State#state.coordinator_pid,{revise_next_slot, State#state.slot}),
-  {next_state, send_message, State#state{timestamp_revising=RevisingTime}};
-revising_next_slot(Event, State) ->
-  utility:log("revising_next_slot: unknown event: ~p~n", [Event]),
-  {next_state, revising_next_slot, State}.
 
 send_message({next_slot, NextSlot}, State) ->
   utility:log("send_message: next_slot ~p~n", [NextSlot]),

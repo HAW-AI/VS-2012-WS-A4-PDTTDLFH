@@ -30,14 +30,17 @@ time_until_slot(Slot, Adjustment) ->
   ((?NUM_SLOTS - (CurrentSlot - Slot)) * ?SLOT_TIME - ElapsedTime + ?SLOT_TIME div 2) - 1000 - Adjustment.
 
 log(Message) ->
-  LogMessage = lists:concat([werkzeug:timeMilliSecond(),
-                             " - ",
-                             Message,
-                             io_lib:nl()]),
-  werkzeug:logging(lists:concat(["log/", net_adm:localhost(), ".log"]), LogMessage).
+  %LogMessage = lists:concat([werkzeug:timeMilliSecond(),
+    %                         " - ",
+   %                          Message,
+  %                           io_lib:nl()]),
+  %werkzeug:logging(lists:concat(["log/", net_adm:localhost(), ".log"]), LogMessage).
+{}.
 
 log(Format, Args) ->
-  werkzeug:logging(lists:concat(["log/", net_adm:localhost(), ".log"]), io_lib:format(Format, Args)).
+ % werkzeug:logging(lists:concat(["log/", net_adm:localhost(), ".log"]), io_lib:format(Format, Args)).
+{}.
 
 log(FileName, Format, Args) ->
-  werkzeug:logging(lists:concat(["log/", FileName, ".log"]), io_lib:format(Format, Args)).
+ % werkzeug:logging(lists:concat(["log/", FileName, ".log"]), io_lib:format(Format, Args)).
+{}.
