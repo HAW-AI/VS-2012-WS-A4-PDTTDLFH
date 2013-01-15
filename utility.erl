@@ -29,18 +29,25 @@ time_until_slot(Slot, Adjustment) ->
   % <distance to desired slot> * <time of slot> - <already elapsed time> + <time to be in middle of slot>
   ((?NUM_SLOTS - (CurrentSlot - Slot)) * ?SLOT_TIME - ElapsedTime + ?SLOT_TIME div 2) - 1000 - Adjustment.
 
-log(Message) ->
-  %LogMessage = lists:concat([werkzeug:timeMilliSecond(),
-    %                         " - ",
-   %                          Message,
-  %                           io_lib:nl()]),
-  %werkzeug:logging(lists:concat(["log/", net_adm:localhost(), ".log"]), LogMessage).
-{}.
+log(_Message) ->
+  {}.
 
-log(Format, Args) ->
- % werkzeug:logging(lists:concat(["log/", net_adm:localhost(), ".log"]), io_lib:format(Format, Args)).
-{}.
+log(_Format, _Args) ->
+  {}.
 
-log(FileName, Format, Args) ->
- % werkzeug:logging(lists:concat(["log/", FileName, ".log"]), io_lib:format(Format, Args)).
-{}.
+log(_FileName, _Format, _Args) ->
+  {}.
+
+
+%log(Message) ->
+%  LogMessage = lists:concat([werkzeug:timeMilliSecond(),
+%                             " - ",
+%                             Message,
+%                             io_lib:nl()]),
+%  werkzeug:logging(lists:concat(["log/", net_adm:localhost(), ".log"]), LogMessage).
+%
+%log(Format, Args) ->
+%  werkzeug:logging(lists:concat(["log/", net_adm:localhost(), ".log"]), io_lib:format(Format, Args)).
+%
+%log(FileName, Format, Args) ->
+%  werkzeug:logging(lists:concat(["log/", FileName, ".log"]), io_lib:format(Format, Args)).
