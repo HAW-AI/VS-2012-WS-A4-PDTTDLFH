@@ -1,15 +1,18 @@
 # Verteilte Systeme - Wintersemester 2012 - Aufgabe 4
 
 ## Compiling
-    erlc *.erl
+    handled by the start.sh script
 
 ## Running
 
 ### Usage
-    java -cp <PathToDataSource> datasource.DataSource 6 99 | sh start.sh <ReceivingPort> [<SendingPort>] <TeamNumber> <StationNumber> <MulticastIP> <LocalIP>
+    sh start.sh <LocalIP> <start-client-nummer> <end-client-nummer> <ReceivingPort> <MulticastIP>
 
-### Example
-    java -cp ~/Downloads/datasource/ datasource.DataSource 6 99 | sh start.sh 1338 08 99 225.10.1.2 127.0.0.1
+### Example for 20 clients
+    sh start.sh 172.16.1.9 0 19 1338 225.10.1.2
+
+### Stopping
+    sh stop.sh
 
 ## Logging
 The logs are written to the `log/` directory.
