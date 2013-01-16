@@ -18,10 +18,11 @@
                 current_slot,
                 receiver_pid :: pid(),
                 sender_pid :: pid(),
-				datasink_pid :: pid(),
+		datasink_pid :: pid(),
                 slot_wishes,
                 used_slots,
-                needs_new_slot}).
+                needs_new_slot,
+                frame_timer}).
 
 start([ReceivingPortAtom, TeamNumberAtom, StationNumberAtom, MulticastIPAtom, LocalIPAtom]) ->
   SendingPort = 14000 + atom_to_integer(TeamNumberAtom),
@@ -89,7 +90,7 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
   {ok, DataSinkPID} = datasink:start(TeamNumber, StationNumber),
   
   %%% start timer for first sending round
-  create_msg_timer(2000, first_frame),
+  Timer = create_msg_timer(2000, first_frame),
   {ok, #state{team_number         = TeamNumber,       %
               station_number      = StationNumber,    % HOSTNAME##lab
               receiver_pid        = ReceiverPID,      % PID of the receiver gen_server
@@ -97,7 +98,8 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
 			  datasink_pid        = DataSinkPID,      % PID of the datasink gen_server
               slot_wishes         = dict:new(),       % [{SlotNumber,[Station1, Station2]}, ...]
               used_slots          = [],               % list of all slots in use. determined by seen packets
-              needs_new_slot = false             %
+              needs_new_slot = false,             %
+              frame_timer = Timer
              }}.
 
 %%% async incoming messages
@@ -116,9 +118,17 @@ handle_cast({received, Slot, TimestampReceived, Packet}, State) ->
           SlotwishesWithCollision = dict:append(Slot,
                                                 State#state.station_number,
                                                 NewSlotwishes),
-
+          NewTimer = case State#state.needs_new_slot of
+            true ->
+              State#state.frame_timer;
+            false ->
+              %skip up to 2 frames to avoid to be stuck in collisions on same slots repeatedly
+	      FramesToSkip = random:uniform(3),
+	      restart_msg_timer(1000 * FramesToSkip, new_frame, State#state.frame_timer)
+          end,
           {noreply, State#state{needs_new_slot = true,
-                                slot_wishes         = SlotwishesWithCollision}};
+                                slot_wishes    = SlotwishesWithCollision,
+                                frame_timer    = NewTimer}};
         false ->
           {noreply, State#state{needs_new_slot = false,
                                 slot_wishes         = NewSlotwishes}}
@@ -132,7 +142,7 @@ handle_cast({received, Slot, TimestampReceived, Packet}, State) ->
   end;
 
 handle_cast(needs_new_slot, State) ->
-  io:format("needs new slot"),
+  utility:log("needs new slot"),
   {noreply, State#state{needs_new_slot = true}};
 
 handle_cast(kill, State) ->
@@ -153,8 +163,13 @@ atom_to_integer(Atom) ->
   list_to_integer(atom_to_list(Atom)).
 
 create_msg_timer(Time, Msg) ->
-utility:log("creating timer"),
-	erlang:send_after(Time - (utility:current_timestamp() rem 1000),self(),Msg).
+  utility:log("creating timer"),
+  erlang:send_after(Time - (utility:current_timestamp() rem 1000),self(),Msg).
+
+restart_msg_timer(Time, Msg, OldTimerRef) ->
+  erlang:cancel_timer(OldTimerRef),
+  create_msg_timer(Time, Msg).
+
 
 calculate_free_slot(Slotwishes) ->
   utility:log("calc free slot"),
@@ -195,27 +210,27 @@ handle_info(first_frame, State) ->
 	utility:log("lets start a new round"),
 	case calculate_free_slot(State#state.slot_wishes) of
 	  no_free_slot ->
-	  	utility:log("no free slot. skipping this frame"),
-	    create_msg_timer(1000, first_frame),
-        {noreply, State#state{slot_wishes = dict:new(), used_slots=[], needs_new_slot = false}};
+	  utility:log("no free slot. skipping this frame"),
+	  NewTimer = create_msg_timer(1000, first_frame),
+        {noreply, State#state{slot_wishes = dict:new(), used_slots=[], needs_new_slot = false, frame_timer = NewTimer}};
 	  Slot ->
-	  	utility:log("found free slot. starting first frame"),
-	    create_msg_timer(1000, new_frame),
+	    utility:log("found free slot. starting first frame"),
+	    NewTimer = create_msg_timer(1000, new_frame),
 	    gen_fsm:send_event(State#state.sender_pid, {slot, Slot}),
-		{noreply, State#state{current_slot = Slot, slot_wishes = dict:new(), used_slots=[], needs_new_slot = false}}
+		{noreply, State#state{current_slot = Slot, slot_wishes = dict:new(), used_slots=[], needs_new_slot = false, frame_timer = NewTimer}}
 	end;
   
 handle_info(new_frame, State) ->
 	%start timer for next sending round
 	utility:log("lets start a new round"),
-	create_msg_timer(1000, new_frame),
+        NewTimer = create_msg_timer(1000, new_frame),
 	NewCurrentSlot = case State#state.needs_new_slot of
 		true ->
 		    utility:log("own packet collided - calculating new slot"),
 			ASlot = case calculate_free_slot(State#state.slot_wishes) of
 				no_free_slot ->
 					utility:log("send_message: no free slot. skipping this frame!"),
-					State#state.current_slot;
+					no_free_slot;
 				Slot ->
 					gen_fsm:send_event(State#state.sender_pid, {slot, Slot}),
 					Slot
@@ -225,8 +240,14 @@ handle_info(new_frame, State) ->
 			gen_fsm:send_event(State#state.sender_pid, {slot, State#state.current_slot}),
 			State#state.current_slot
 	end,
-	%resetting state for next round except for the new slot
-	{noreply, State#state{current_slot = NewCurrentSlot, slot_wishes = dict:new(), used_slots=[], needs_new_slot = false}};
+	case NewCurrentSlot of
+		no_free_slot ->
+			%resetting wishes and used_slots for next frame, keep current slot but get a new one next round
+			{noreply, State#state{slot_wishes = dict:new(), used_slots=[], needs_new_slot = true, frame_timer = NewTimer}};	
+		_ ->
+			%resetting wishes and used_slots for next frame and set the next slot
+			{noreply, State#state{current_slot = NewCurrentSlot, slot_wishes = dict:new(), used_slots=[], needs_new_slot = false, frame_timer = NewTimer}}
+	end;
 
 handle_info({revise_next_slot, CurrentNextSlot}, State) ->
 	utility:log("coordinator: revising current next slot"),
