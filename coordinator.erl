@@ -106,17 +106,17 @@ handle_cast({received, Slot, TimestampReceived, Packet}, State) ->
   NewSlotwishes = register_slotwishes(Packet, State#state.slot_wishes),
   case check_for_packet_collision(Slot, State) of
     true ->
-	  utility:log("collision detected"),
+      utility:log("collision detected"),
       % check if the Slot of the packet is the same that we are sending in
       case Slot == State#state.current_slot of
         true ->
-		  utility:log("collision with own packet"),
+          utility:log("collision with own packet"),
           % Add slot to Slotwishes again so that it will be sorted out in the
           % next round when we are checking for a free slot
           SlotwishesWithCollision = dict:append(Slot,
                                                 State#state.station_number,
                                                 NewSlotwishes),
-          % TODO log own packet collision
+
           {noreply, State#state{needs_new_slot = true,
                                 slot_wishes         = SlotwishesWithCollision}};
         false ->
@@ -139,8 +139,7 @@ handle_cast(kill, State) ->
   {stop, normal, State};
 
 handle_cast(_UnknownMessage, State) ->
-  % TODO log UnknownMessage
-	utility:log("unknown msg"),
+  utility:log("unknown msg"),
   {noreply, State}.
 
 %%% do everything required for a clean shutdown
