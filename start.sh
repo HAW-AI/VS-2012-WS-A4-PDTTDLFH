@@ -1,4 +1,11 @@
 #!/bin/bash
+
+if [ $# == '0' ] ; then
+  echo 'usage: sh start.sh <adresse des zu verwendenen Interfaces> <start-client-nummer> <end-client-nummer> <Port> <Multicast Adresse>'
+  echo 'example: sh start.sh 172.16.1.2 0 9 1337 225.10.1.2'
+  exit
+fi
+
 cp /dev/null log/all.log
 rm *.beam
 echo "re-compiling"
