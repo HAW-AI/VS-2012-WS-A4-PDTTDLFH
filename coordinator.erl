@@ -21,7 +21,7 @@
 				datasink_pid :: pid(),
                 slot_wishes,
                 used_slots,
-                own_packet_collided}).
+                needs_new_slot}).
 
 start([ReceivingPortAtom, TeamNumberAtom, StationNumberAtom, MulticastIPAtom, LocalIPAtom]) ->
   SendingPort = 14000 + atom_to_integer(TeamNumberAtom),
@@ -97,7 +97,7 @@ init([ReceivingPort, SendingPort, TeamNumber, StationNumber, MulticastIP, LocalI
 			  datasink_pid        = DataSinkPID,      % PID of the datasink gen_server
               slot_wishes         = dict:new(),       % [{SlotNumber,[Station1, Station2]}, ...]
               used_slots          = [],               % list of all slots in use. determined by seen packets
-              own_packet_collided = false             %
+              needs_new_slot = false             %
              }}.
 
 %%% async incoming messages
@@ -117,10 +117,10 @@ handle_cast({received, Slot, TimestampReceived, Packet}, State) ->
                                                 State#state.station_number,
                                                 NewSlotwishes),
           % TODO log own packet collision
-          {noreply, State#state{own_packet_collided = true,
+          {noreply, State#state{needs_new_slot = true,
                                 slot_wishes         = SlotwishesWithCollision}};
         false ->
-          {noreply, State#state{own_packet_collided = false,
+          {noreply, State#state{needs_new_slot = false,
                                 slot_wishes         = NewSlotwishes}}
       end;
     false -> % no collision at all
@@ -130,6 +130,10 @@ handle_cast({received, Slot, TimestampReceived, Packet}, State) ->
       {noreply, State#state{slot_wishes = NewSlotwishes,
                             used_slots  = UsedSlots}}
   end;
+
+handle_cast(needs_new_slot, State) ->
+  io:format("needs new slot"),
+  {noreply, State#state{needs_new_slot = true}};
 
 handle_cast(kill, State) ->
   {stop, normal, State};
@@ -194,19 +198,19 @@ handle_info(first_frame, State) ->
 	  no_free_slot ->
 	  	utility:log("no free slot. skipping this frame"),
 	    create_msg_timer(1000, first_frame),
-        {noreply, State#state{slot_wishes = dict:new(), used_slots=[], own_packet_collided = false}};
+        {noreply, State#state{slot_wishes = dict:new(), used_slots=[], needs_new_slot = false}};
 	  Slot ->
 	  	utility:log("found free slot. starting first frame"),
 	    create_msg_timer(1000, new_frame),
 	    gen_fsm:send_event(State#state.sender_pid, {slot, Slot}),
-		{noreply, State#state{current_slot = Slot, slot_wishes = dict:new(), used_slots=[], own_packet_collided = false}}
+		{noreply, State#state{current_slot = Slot, slot_wishes = dict:new(), used_slots=[], needs_new_slot = false}}
 	end;
   
 handle_info(new_frame, State) ->
 	%start timer for next sending round
 	utility:log("lets start a new round"),
 	create_msg_timer(1000, new_frame),
-	NewCurrentSlot = case State#state.own_packet_collided of
+	NewCurrentSlot = case State#state.needs_new_slot of
 		true ->
 		    utility:log("own packet collided - calculating new slot"),
 			ASlot = case calculate_free_slot(State#state.slot_wishes) of
@@ -223,7 +227,7 @@ handle_info(new_frame, State) ->
 			State#state.current_slot
 	end,
 	%resetting state for next round except for the new slot
-	{noreply, State#state{current_slot = NewCurrentSlot, slot_wishes = dict:new(), used_slots=[], own_packet_collided = false}};
+	{noreply, State#state{current_slot = NewCurrentSlot, slot_wishes = dict:new(), used_slots=[], needs_new_slot = false}};
 
 handle_info({revise_next_slot, CurrentNextSlot}, State) ->
 	utility:log("coordinator: revising current next slot"),
