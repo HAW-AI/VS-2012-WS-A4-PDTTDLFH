@@ -192,11 +192,11 @@ handle_info(first_frame, State) ->
 	utility:log("lets start a new round"),
 	case calculate_free_slot(State#state.slot_wishes) of
 	  no_free_slot ->
-	  	utility:log("send_message: no free slot. skipping this frame!"),
+	  	utility:log("no free slot. skipping this frame"),
 	    create_msg_timer(1000, first_frame),
         {noreply, State#state{slot_wishes = dict:new(), used_slots=[], own_packet_collided = false}};
 	  Slot ->
-	  	utility:log("send_message: no free slot. skipping this frame!"),
+	  	utility:log("found free slot. starting first frame"),
 	    create_msg_timer(1000, new_frame),
 	    gen_fsm:send_event(State#state.sender_pid, {slot, Slot}),
 		{noreply, State#state{current_slot = Slot, slot_wishes = dict:new(), used_slots=[], own_packet_collided = false}}
