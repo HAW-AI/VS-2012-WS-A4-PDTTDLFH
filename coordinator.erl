@@ -228,28 +228,28 @@ handle_info(new_frame, State) ->
         NewTimer = create_msg_timer(1000, new_frame),
 	NewCurrentSlot = case State#state.needs_new_slot of
 		true ->
-		    utility:log("own packet collided - calculating new slot"),
-			ASlot = case calculate_free_slot(State#state.slot_wishes) of
+		    	utility:log("own packet collided - calculating new slot"),
+			case calculate_free_slot(State#state.slot_wishes) of
 				no_free_slot ->
 					utility:log("send_message: no free slot. skipping this frame!"),
 					no_free_slot;
-				Slot ->
-					gen_fsm:send_event(State#state.sender_pid, {slot, Slot}),
-					Slot
-			end,
-			ASlot;
+				FreeSlot ->
+					gen_fsm:send_event(State#state.sender_pid, {slot, FreeSlot}),
+					FreeSlot
+			end;
 		false ->
 			gen_fsm:send_event(State#state.sender_pid, {slot, State#state.current_slot}),
 			State#state.current_slot
 	end,
-	case NewCurrentSlot of
+	NewState = case NewCurrentSlot of
 		no_free_slot ->
 			%resetting wishes and used_slots for next frame, keep current slot but get a new one next round
-			{noreply, State#state{slot_wishes = dict:new(), used_slots=[], needs_new_slot = true, frame_timer = NewTimer}};	
+			State#state{slot_wishes = dict:new(), used_slots=[], needs_new_slot = true, frame_timer = NewTimer};	
 		_ ->
 			%resetting wishes and used_slots for next frame and set the next slot
-			{noreply, State#state{current_slot = NewCurrentSlot, slot_wishes = dict:new(), used_slots=[], needs_new_slot = false, frame_timer = NewTimer}}
-	end;
+			State#state{current_slot = NewCurrentSlot, slot_wishes = dict:new(), used_slots=[], needs_new_slot = false, frame_timer = NewTimer}
+	end,
+	{noreply, NewState};
 
 handle_info({revise_next_slot, CurrentNextSlot}, State) ->
 	utility:log("coordinator: revising current next slot"),
