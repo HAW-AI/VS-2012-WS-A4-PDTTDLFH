@@ -117,9 +117,6 @@ handle_cast({received, Slot, TimestampReceived, Packet}, State) ->
           utility:log("collision with own packet"),
           % Add slot to Slotwishes again so that it will be sorted out in the
           % next round when we are checking for a free slot
-          SlotwishesWithCollision = dict:append(Slot,
-                                                State#state.station_number,
-                                                NewSlotwishes),
           NewTimer = case State#state.needs_new_slot of
             true ->
               State#state.frame_timer;
@@ -129,7 +126,7 @@ handle_cast({received, Slot, TimestampReceived, Packet}, State) ->
 	      restart_msg_timer(1000 * FramesToSkip, new_frame, State#state.frame_timer)
           end,
           {noreply, State#state{needs_new_slot = true,
-                                slot_wishes    = SlotwishesWithCollision,
+                                slot_wishes    = NewSlotwishes,
                                 frame_timer    = NewTimer}};
         false ->
           {noreply, State#state{needs_new_slot = false,
@@ -192,8 +189,8 @@ check_for_packet_collision(Slot, State) ->
 %%% adds the slot a packet was sent in to the list of used slots
 -spec register_slotwishes(Packet :: binary(), Slotwishes :: dict()) -> dict().
 register_slotwishes(Packet, Slotwishes) ->
-  {_, StationNumber, Slot, _, _} = parse_message(Packet),
-  dict:append(Slot, StationNumber, Slotwishes).
+  {_, StationNumber, NextSlot, _, _} = parse_message(Packet),
+  dict:store(NextSlot, StationNumber, Slotwishes).
 
 %%% TODO handle malformed packets
 parse_message(Packet) ->
