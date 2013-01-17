@@ -152,6 +152,7 @@ handle_cast(_UnknownMessage, State) ->
 
 %%% do everything required for a clean shutdown
 terminate(_Reason, State) ->
+  exit(State#state.datasink_pid, kill),
   gen_server:cast(State#state.receiver_pid, kill),
   gen_fsm:send_event(State#state.sender_pid, kill),
   ok.
