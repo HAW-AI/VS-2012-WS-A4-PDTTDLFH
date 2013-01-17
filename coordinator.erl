@@ -13,6 +13,8 @@
          terminate/2,
          code_change/3]).
 
+-define (FRAMES_TO_SKIP, 3).
+
 -record(state, {team_number,
                 station_number,
                 current_slot,
@@ -123,7 +125,7 @@ handle_cast({received, Slot, TimestampReceived, Packet}, State) ->
               State#state.frame_timer;
             false ->
               %skip up to 2 frames to avoid to be stuck in collisions on same slots repeatedly
-	      FramesToSkip = random:uniform(3),
+	      FramesToSkip = random:uniform(?FRAMES_TO_SKIP),
 	      restart_msg_timer(1000 * FramesToSkip, new_frame, State#state.frame_timer)
           end,
           {noreply, State#state{needs_new_slot = true,
