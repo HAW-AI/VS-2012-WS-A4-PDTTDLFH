@@ -129,8 +129,7 @@ handle_cast({received, Slot, TimestampReceived, Packet}, State) ->
                                 slot_wishes    = NewSlotwishes,
                                 frame_timer    = NewTimer}};
         false ->
-          {noreply, State#state{needs_new_slot = false,
-                                slot_wishes         = NewSlotwishes}}
+          {noreply, State#state{slot_wishes         = NewSlotwishes}}
       end;
     false -> % no collision at all
       {StationIdentifier, StationNumber, NextSlot, Payload, Timestamp} = parse_message(Packet),
